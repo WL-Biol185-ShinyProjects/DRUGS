@@ -1,0 +1,15 @@
+---
+title: "Data_Project"
+output: html_document
+---
+```{r}
+library(tidyverse)
+
+```
+
+```{r}
+NADAC_data_2024 <- read.csv("https://download.medicaid.gov/data/nadac-national-average-drug-acquisition-cost-10-16-2024.csv")
+
+```
+
+
