@@ -14,5 +14,10 @@ NADAC_data_2024 <- read.csv("https://download.medicaid.gov/data/nadac-national-a
 ```{r}
 Drug_Bank_Interacts <- read.delim("~/DRUGS/ChCh-Miner_durgbank-chem-chem.tsv", header=FALSE)
 Drug_NDC_PropreitaryName <- read.csv("~/DRUGS/20220906_product.csv")
+Drug_Prices <- read.csv("~/DRUGS/Medicaid_Spending_by_Drug_2022.csv")
+```
+```{r}
+Undup_Drug_Prices <- Drug_Prices[ !duplicated(Drug_Prices$Brnd_Name),]
+Undup_Drug_Prices
 ```
 
