@@ -19,5 +19,17 @@ Drug_Prices <- read.csv("~/DRUGS/Medicaid_Spending_by_Drug_2022.csv")
 ```{r}
 Undup_Drug_Prices <- Drug_Prices[ !duplicated(Drug_Prices$Brnd_Name),]
 Undup_Drug_Prices
+
+NoNA_Undup_Drug_Prices <- na.omit(Undup_Drug_Prices)
+NoNA_Undup_Drug_Prices
+```
+
+```{r}
+  Price = c("Avg_Spnd_Per_Clm_2018", "Avg_Spnd_Per_Clm_2019", "Avg_Spnd_Per_Clm_2022")
+
+NoNA_Undup_Drug_Prices %>%
+  filter(Drug == "Brnd_Name") %>%
+  ggplot(aes(Price, Drug)) + geom_bar(stat = 'identity')
+  
 ```
 
