@@ -1,0 +1,15 @@
+---
+title: "Cost_tab.rmd"
+output: html_document
+---
+
+
+
+```{r}
+NoNA_Undup_Drug_Prices
+
+Cost_Data <- data.frame(
+  price = c("Avg_Spnd_Per_Clm_2018", "Avg_Spnd_Peer_Clm_2019", "Avg_Spnd_Per_Clm_2020", "Avg_Spnd_Per_Clm_2021", "Avg_Spnd_Per_Clm_2022")
+)
+```
+
