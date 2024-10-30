@@ -1,22 +1,7 @@
 library(shiny)
-library(leaflet)
-library(tidyverse)
-library(ggplot2)
-library(dplyr)
-library(bslib)
 library(shinythemes)
 
-#Source Pages
-#source("Symptoms_tab.R")
-#source("Medical_uses_tab.R")
-#source("Cost_tab.R")
-#source("Alternatives_tab.R")
-#source("Efficacy_tab.R")
-#source("Prevalence_tab.R")
-
-
-
-ui <- navbarPage(
+  ui <- navbarPage(
   title = "Home",
   theme = shinythemes::shinytheme("sandstone"),
   includeCSS("www/home_page.css"),
@@ -58,13 +43,13 @@ ui <- navbarPage(
                ),
                
                div(class = "card",
-                   h3("Reviews"),
+                   h3("Efficacy"),
                    p("Have questions? Feel free to reach out to us for more information."),
                    actionButton("contact_efficacy", "Get in Touch", class = "btn btn-primary")
                ),
                
                div(class = "card",
-                   h3("Insert Here"),
+                   h3("Prevalence"),
                    p("Have questions? Feel free to reach out to us for more information."),
                    actionButton("contact_prevalence", "Get in Touch", class = "btn btn-primary")
                )
@@ -73,35 +58,33 @@ ui <- navbarPage(
   
   # Define additional tabs for Symptoms, Medical Uses, Cost, Alternatives, Efficacy, Prevalence
   tabPanel("Symptoms",
-           tags$h2("Side effects correlation"),
+           tags$h2("Select what medicine treats first then select your medicine"),
            mainPanel()
   ),
   
   tabPanel("Medical Uses",
-           tags$h2("Retrieve information about medical uses from wikipedia"),
+           tags$h2("What Medical Uses a Medicine Has"),
            mainPanel()
   ),
   
   tabPanel("Cost",
-           tags$h2("Select a medicine to compare costs, compare one drug over 5 years"),
+           tags$h2("Select a medicine to compare costs"),
            mainPanel()
   ),
   
   tabPanel("Alternatives",
-           tags$h2("similar drugs that do the same thing"),
+           tags$h2("Select Medicine to see Alternatives"),
            mainPanel()
   ),
   
-    tabPanel("Reviews",
-           tags$h2("Compare customer sastifactions to reviews"),
+  tabPanel("Efficacy",
+           tags$h2("Select medicine to see efficacy"),
            mainPanel()
   ),
   
-  tabPanel("Insert Here",
+  tabPanel("Prevalence",
            tags$h2("Select Medicine to see prevalence"),
            mainPanel()
   )
 )
-
-
 

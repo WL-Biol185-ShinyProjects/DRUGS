@@ -5,12 +5,7 @@ library(ggplot2)
 library(dplyr)
 
 source("Home_page.R")
-source("Symptoms_tab.R")
-source("Medical_uses_tab.R")
-source("Cost_tab.R")
-source("Alternatives_tab.R")
-source("Efficacy_tab.R")
-source("Prevalence_tab.R")
+
 
 function(input, output) {
   observeEvent(input$learnMore, {
@@ -34,3 +29,4 @@ function(input, output) {
     ))
   })
 }
+
