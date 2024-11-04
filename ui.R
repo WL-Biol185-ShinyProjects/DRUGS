@@ -16,7 +16,7 @@ library(shinythemes)
 
 
 
-ui <- navbarPage(
+navbarPage(
   title = "Home",
   theme = shinythemes::shinytheme("sandstone"),
   includeCSS("www/home_page.css"),
