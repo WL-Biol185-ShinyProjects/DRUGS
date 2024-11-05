@@ -46,4 +46,8 @@ docs/
 po/*~
 # RStudio Connect folder
 rsconnect/
+<<<<<<< HEAD
 medicine_dataset.csv
+=======
+Medicare_Part_D_Spending_by_Drug_2022.csv
+>>>>>>> 0c0d9beffd8aa74b5913ded7e9b3a86dcebebd98
