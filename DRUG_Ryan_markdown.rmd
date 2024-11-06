@@ -40,6 +40,12 @@ Drug[ !duplicated(Drug),]
 UnduplicatedDrug <- Drug[ !duplicated(Drug),]
 View(UnduplicatedDrug
      )
+
+write.csv(UnduplicatedDrug, file = "UnduplicatedDrug.csv")
+```
+##Merging data
+```{r}
+
 ```
 
 
