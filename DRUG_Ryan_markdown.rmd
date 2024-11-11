@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r}
 library(tidyverse)
+library(dplyr)
 ```
 
 ## R Markdown
@@ -43,19 +44,51 @@ View(UnduplicatedDrug
 
 write.csv(UnduplicatedDrug, file = "UnduplicatedDrug.csv")
 ```
-##taking away everything but first name of drug (taking away tablet, amounts, etc.) did not work, its way too big
+##Deleting duplicated Drug names in UnduplicatedDrug
 ```{r}
-DrugSubandSide1 <- data.frame( DrugSubandSide, "Drug" = sapply(strsplit(DrugSubandSide$name, split = " ", fixed = TRUE), function(x) {x [2] }) )
+UnduplicatedDrug1 <- UnduplicatedDrug[ !duplicated(UnduplicatedDrug$Drug), ]
+View(UnduplicatedDrug1)
 
+write.csv(UnduplicatedDrug1, file = "UnduplicatedDrug1.csv")
 ```
 
+##Deleting "reviews" from Review to make it numeric
 ```{r}
-duplicated(DrugSubandSide)
-DrugSubandSide[ !duplicated(DrugSubandSide),]
+UnduplicatedDrug2 <- data.frame(UnduplicatedDrug1, "Reviews" = sapply(strsplit(UnduplicatedDrug1$Reviews, split = " ", fixed = TRUE), function (x) {x [1]}))
 
-DrugSubandSide11 <- DrugSubandSide11[ !duplicated(DrugSubandSide),]
-View(DrugSubandSide11
-     )
+UnduplicatedDrug2$Reviews.1 <- as.numeric(UnduplicatedDrug2$Reviews.1)
+
+write.csv(UnduplicatedDrug2, file = "UnduplicatedDrug2.csv")
 ```
+
+
+
+##bar graph comparing the Drug to the satisfaction rating in regards to condition the drug treats
+```{r}
+Filtered_UnduplicatedDrug1 <- filter(UnduplicatedDrug1, Condition == 'Acute Bacterial Sinusitis')
+  ggplot( Filtered_UnduplicatedDrug1, aes(Drug, Satisfaction)) + geom_bar(stat = 'identity') + theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+##bar graph comparing the drug to the reviews in regards to the condition the drug treats--might use this later!
+#```{r}
+Filtered_UnduplicatedDrug1 <- filter(UnduplicatedDrug1, Condition == 'Acute Bacterial Sinusitis')
+  ggplot( Filtered_UnduplicatedDrug1, aes(Drug, Reviews)) + geom_bar(stat = 'identity') + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+##bar graph comparing the drug to how effective it is in regards to the condition the drug treats
+```{r}
+Filtered_UnduplicatedDrug2 <- filter(UnduplicatedDrug2, Condition == 'Acute Bacterial Sinusitis')
+  ggplot( Filtered_UnduplicatedDrug2, aes(Effective, Reviews.1)) + geom_point(aes( colour = factor(Drug)))
+```
+##bar graph comparign the drug to its ease of use in regards to the condiiton the drug treats
+```{r}
+Filtered_UnduplicatedDrug2 <- filter(UnduplicatedDrug2, Condition == 'Acute Bacterial Sinusitis')
+  ggplot( Filtered_UnduplicatedDrug2, aes(EaseOfUse, Reviews.1)) + geom_point(aes( colour = factor(Drug)))
+```
+
+##Satisfaction vs reviews filtered by drugs in a certain condition
+```{r}
+Filtered_UnduplicatedDrug2 <- filter(UnduplicatedDrug2, Condition == 'Acute Bacterial Sinusitis')
+  ggplot( Filtered_UnduplicatedDrug2, aes(Satisfaction, Reviews.1)) + geom_point(aes( colour = factor(Drug)))
+```
+
 
 
