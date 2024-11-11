@@ -16,6 +16,13 @@ medicalUses <- tabPanel(
     )
   ),
   mainPanel(
+    div(class = "header", 
+        h2("Drug Information")
+        ),
+    div(class = "header",
+        h2("Side Effects")
+       ),
+    
     tableOutput("sideEffectsTable")
   ) 
 )

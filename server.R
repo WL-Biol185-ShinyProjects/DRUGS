@@ -13,14 +13,13 @@ source("tab7.R")
 symptom_list <- readRDS("DrugSubandSide.RDS")
 
 function(input, output, session) {
-  illnessNameSubset <- unique(symptom_list[1:100, 50:54])
-  
-  observe({
-    updateSelectizeInput(session,
-                         "drugIllness",
-                         choices = illnessNameSubset,
+illnessNameSubset <- unique(symptom_list[1:248000, 50])
+    
+updateSelectizeInput(session,
+                     "drugIllness",
+                      choices = illnessNameSubset,
+                      server = TRUE
     )
-  })
   
   observe ({
     filterName <- filter(DrugSubandSide, 
@@ -30,10 +29,11 @@ function(input, output, session) {
                            use3 == input$drugIllness |
                            use4 == input$drugIllness
     )
-    drugNameFiltered <- filterName[1:100, 2]
+    drugNameFiltered <- unique(filterName[1:248000, 2])
     updateSelectizeInput(session, 
                          "drugName", 
-                         choices = unique(drugNameFiltered)
+                         choices = unique(drugNameFiltered),
+                         server = TRUE
     )
   })
   observe ({
