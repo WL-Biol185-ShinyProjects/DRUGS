@@ -5,6 +5,9 @@ output: html_document
 ```{r}
 library(tidyverse)
 library(readr)
+library(lubridate)
+library(reshape2)
+library(dplyr)
 ```
 
 ```{r}
@@ -14,13 +17,58 @@ NADAC_data_2024 <- read.csv("https://download.medicaid.gov/data/nadac-national-a
 ```{r}
 Drug_Bank_Interacts <- read.delim("~/DRUGS/ChCh-Miner_durgbank-chem-chem.tsv", header=FALSE)
 Drug_NDC_PropreitaryName <- read.csv("~/DRUGS/20220906_product.csv")
-<<<<<<< HEAD
-=======
 Drug_Prices <- read.csv("~/DRUGS/Medicaid_Spending_by_Drug_2022.csv")
 ```
 ```{r}
 Undup_Drug_Prices <- Drug_Prices[ !duplicated(Drug_Prices$Brnd_Name),]
 Undup_Drug_Prices
->>>>>>> 0c0d9beffd8aa74b5913ded7e9b3a86dcebebd98
+
+NoNA_Undup_Drug_Prices <- na.omit(Undup_Drug_Prices)
+NoNA_Undup_Drug_Prices
 ```
+
+```{r}
+ Longer_Prices <- NoNA_Undup_Drug_Prices %>%
+ pivot_longer(
+   Tot_Spndng_2018:Avg_Spnd_Per_Clm_2022,
+   names_to = "heads"
+ )
+Longer_Prices$year <- lapply(Longer_Prices$heads, function (x) stringr::str_match(x, "(\\d+)")[1])
+Longer_Prices$type <- lapply(Longer_Prices$heads, function (x) stringr::str_match(x, "(.+)(?=\\_\\d{4})")[1])
+Longer_Prices$heads <- NULL
+Longer_Prices$year <- as.numeric(Longer_Prices$year)
+Longer_Prices$type <- as.character(Longer_Prices$type)
+```
+
+
+```{r}
+Medicine_Details_melt <- melt(Medicine_Details, id.vars = "Manufacturer", variable.name = "Category", value.name = "Value")
+
+Medicine_Det_Filtered <- filter(Medicine_Details_melt, Category %in% c("Excellent.Review..", 
+                                                                   "Poor.Review..", 
+                                                                    "Average.Review..") )
+
+  ggplot(Medicine_Det_Filtered, aes(x = Category, y = Value)) + geom_point()
+
+```
+
+# Merging data
+
+
+
+```{r}
+NewName1 <- data.frame( Medicine_Details, "Brnd_Name" = sapply(strsplit(Medicine_Details$Medicine.Name, split = " ", fixed = TRUE), function(x) {x [1] })  )
+
+mergedData <- full_join(NoNA_Undup_Drug_Prices, NewName1, by = "Brnd_Name")
+
+```
+
+
+
+# 
+t <- c("drug1 other stuff", "drug2 other stuff 10 mg")
+1 <- strgsplit(t, split = " ", fixed = TRUE)
+sapply(1, function(x { x[1]})
+
+
 
