@@ -1,6 +1,6 @@
 
 # Define UI for Tab 6
-tab6 <- tabPanel("Map",
+Maps <- tabPanel("Map",
                  h2("Drug Usage Map"),
                  
                  
