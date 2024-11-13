@@ -43,10 +43,27 @@ View(UnduplicatedDrug
 
 write.csv(UnduplicatedDrug, file = "UnduplicatedDrug.csv")
 ```
+<<<<<<< HEAD
 ##Merging data
 ```{r}
 
 ```
 
+=======
+##taking away everything but first name of drug (taking away tablet, amounts, etc.) did not work, its way too big
+```{r}
+DrugSubandSide1 <- data.frame( DrugSubandSide, "Drug" = sapply(strsplit(DrugSubandSide$name, split = " ", fixed = TRUE), function(x) {x [2] }) )
+
+```
+
+```{r}
+duplicated(DrugSubandSide)
+DrugSubandSide[ !duplicated(DrugSubandSide),]
+
+DrugSubandSide11 <- DrugSubandSide11[ !duplicated(DrugSubandSide),]
+View(DrugSubandSide11
+     )
+```
+>>>>>>> 3ed178d879160beb235faf3e7470a86c52bfdd6c
 
 
