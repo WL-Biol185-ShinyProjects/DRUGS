@@ -1,6 +1,6 @@
 library(shiny)
 library(dplyr)
-
+library(leaflet)
 source("home.R")
 source("medicalUses.R")
 source("tab3.R")
@@ -135,85 +135,20 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
-<<<<<<< HEAD
+
 }
 
 
 
 
-# Run the Shiny app
-shinyApp(ui = ui, server = server)
 
 
-#Sever Code to produce a heatmap 
-function(input, output, session) {
-=======
->>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
-  
-  # Sample data to use for the map layers (e.g., different data points for drug usage)
-  sample_data <- data.frame(
-    lat = c(37.773, 37.783, 37.793),
-    lng = c(-79.441, -79.442, -79.443),
-    usage = c(20, 40, 60),
-    year = c(2010, 2015, 2020)
-  )
-  
-  # Render the leaflet map based on selected layer and usage range
-  output$map <- renderLeaflet({
-    leaflet() %>%
-      addTiles() %>%
-      setView(lng = -79.442778, lat = 37.783889, zoom = 8) %>%
-      
-      # Add dynamic map layer based on selected input
-      addCircleMarkers(data = sample_data,
-                       lat = ~lat, lng = ~lng,
-                       color = ~ifelse(usage >= input$usageRange[1] & usage <= input$usageRange[2], "blue", "red"),
-                       radius = 8, popup = ~paste("Year:", year, "<br>Usage:", usage))
-  })
-  
-  # Render the Plotly graph showing drug usage trends
-  output$drugTrendPlot <- renderPlotly({
-    # Filter data based on usage range selected by the user
-    filtered_data <- sample_data[sample_data$usage >= input$usageRange[1] & sample_data$usage <= input$usageRange[2], ]
-    
-    # Create a plot showing drug usage over time
-    plot_ly(data = filtered_data, x = ~year, y = ~usage, type = 'scatter', mode = 'lines+markers') %>%
-      layout(title = "Drug Usage Trend",
-             xaxis = list(title = "Year"),
-             yaxis = list(title = "Drug Usage"))
-  })
-<<<<<<< HEAD
-}
 
-
-function(input, output, session) {
-  
-=======
-
->>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
-  # Reactive data for filtering based on input
-  filteredData <- reactive({
-    drug_data %>%
-      filter(drug_name == input$mapLayer,
-             usage >= input$usageRange[1],
-             usage <= input$usageRange[2])
-  })
-  
-  # Render Leaflet map
-  output$drugMap <- renderLeaflet({
-    leaflet(data = filteredData()) %>%
-      addTiles() %>%
-      addCircleMarkers(~longitude, ~latitude,
-                       color = "blue", fillOpacity = 0.7,
-                       popup = ~paste("Usage:", usage))
-    
-    
-  })
   
   output$graph1 <- graph1(input)
   output$graph2 <- graph2(input)
   output$graph3 <- graph3(input)
   
-  }
+  
   
 
