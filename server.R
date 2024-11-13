@@ -1,72 +1,54 @@
 library(shiny)
 library(dplyr)
-library(leaflet)
+
 source("home.R")
 source("medicalUses.R")
 source("tab3.R")
 source("tab4.R")
 source("tab5.R")
-source("Maps.R")
+source("tab6.R")
 source("tab7.R")
 
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
 symptom_list <- readRDS("DrugSubandSide.RDS")
 
 function(input, output, session) {
-
-#Filtering for only illness names 
-illnessNameSubset <- unique(symptom_list[1:248000, 50])
-
-#Server side Selectization for drug illness for medicalUses.R    
-updateSelectizeInput(session,
-                     "drugIllness",
-                      choices = illnessNameSubset,
-                      server = TRUE
-    )
   
-#Creating filter to only select based on drug illness input for medicalUses.R 
- observe ({
+  #Filtering for only illness names 
+  illnessNameSubset <- unique(symptom_list[1:248000, 50])
+  
+  #Server side Selectization for drug illness for medicalUses.R    
+  updateSelectizeInput(session,
+                       "drugIllness",
+                       choices = illnessNameSubset,
+                       server = TRUE
+  )
+  
+  #Creating filter to only select based on drug illness input for medicalUses.R 
+  observe ({
     filterName <- filter(symptom_list, 
-                           use0 == input$drugIllness | 
+                         use0 == input$drugIllness | 
                            use1 == input$drugIllness |
                            use2 == input$drugIllness |
                            use3 == input$drugIllness |
                            use4 == input$drugIllness
     )
-#Creating filter for drug name for medicalUses.R
+    #Creating filter for drug name for medicalUses.R
     drugNameFiltered <- filterName[1:248000, 2]
     updateSelectizeInput(session, 
                          "drugName", 
-
-                         choices = unique(drugNameFiltered)
-    )
-    
-
-  })
-  
-}
-  
-  
-
-
-  
-  
-  
-  observe ({
-    nameFilteredForEffect <- filter(DrugSubandSide, name == input$drugName)
-
                          choices = unique(drugNameFiltered),
                          server = TRUE
-                        )
+    )
   })
- observe ({
-#Creating filter for drug selected in drugName search bar for medicalUses.R
+  observe ({
+    #Creating filter for drug selected in drugName search bar for medicalUses.R
     nameFilteredForEffect <- filter(symptom_list, name == input$drugName)
-
-#Creating tables to select for info needed for medicalUses.R
-
-    sideEffectForDrugs <- nameFilteredForEffect[1, 8:49]
-    #sideEffectForDrugs1 <- nameFilteredForEffect[1, 13:17]
+    
+    #Creating tables to select for info needed for medicalUses.R
+    sideEffectForDrugs <- nameFilteredForEffect[1, 8:12]
+    sideEffectForDrugs1 <- nameFilteredForEffect[1, 13:17]
+    checkSideEffect1 <- nameFilteredForEffect[1, 13]
     #sideEffectForDrugs2 <- nameFilteredForEffect[1, 18:22]
     #sideEffectForDrugs3 <- nameFilteredForEffect[1, 23:27]
     #sideEffectForDrugs4 <- nameFilteredForEffect[1, 28:32]
@@ -80,9 +62,12 @@ updateSelectizeInput(session,
     actionClass <- nameFilteredForEffect[1, 58]
     chemicalClass <- nameFilteredForEffect[1, 55]
     
-#Creating output for info tables for medicalUses.R
+    #Creating output for info tables for medicalUses.R
     output$sideEffectsTable <- renderDataTable({sideEffectForDrugs})
-    #output$sideEffectsTable1 <- renderTable({sideEffectForDrugs1})
+    output$sideEffectsTable1 <- renderUI({ if( checkSideEffect1 != " ") {
+      renderTable(sideEffectForDrugs1)
+    }
+    })
     #output$sideEffectsTable2 <- renderTable({sideEffectForDrugs2})
     #output$sideEffectsTable3 <- renderTable({sideEffectForDrugs3})
     #output$sideEffectsTable4 <- renderTable({sideEffectForDrugs4})
@@ -95,9 +80,9 @@ updateSelectizeInput(session,
     output$actionClassTable <- renderTable({actionClass})
     output$therapeuticClassTable <- renderTable({therapeuticClass})
     output$habitFormingTable <- renderTable({habitForming})
-})
+  })
   
-#Creating home page button responses for home.R
+  #Creating home page button responses for home.R
   observeEvent(input$learnMore, {
     showModal(modalDialog(
       title = "Symptoms",
@@ -118,16 +103,16 @@ updateSelectizeInput(session,
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
-  
-  output$graph1 <- graph1(input)
-  
 }
 
 
 
 
+# Run the Shiny app
+shinyApp(ui = ui, server = server)
 
 
+#Sever Code to prdduce a heatmap 
 function(input, output, session) {
   
   # Sample data to use for the map layers (e.g., different data points for drug usage)
@@ -181,10 +166,8 @@ function(input, output, session) {
                        color = "blue", fillOpacity = 0.7,
                        popup = ~paste("Usage:", usage))
     
+    
   })
-  
-  
-  
   
   
   
