@@ -46,8 +46,9 @@ updateSelectizeInput(session,
     nameFilteredForEffect <- filter(symptom_list, name == input$drugName)
 
 #Creating tables to select for info needed for medicalUses.R
-    sideEffectForDrugs <- nameFilteredForEffect[1, 8:49]
-    #sideEffectForDrugs1 <- nameFilteredForEffect[1, 13:17]
+    sideEffectForDrugs <- nameFilteredForEffect[1, 8:12]
+    sideEffectForDrugs1 <- nameFilteredForEffect[1, 13:17]
+    checkSideEffect1 <- nameFilteredForEffect[1, 13]
     #sideEffectForDrugs2 <- nameFilteredForEffect[1, 18:22]
     #sideEffectForDrugs3 <- nameFilteredForEffect[1, 23:27]
     #sideEffectForDrugs4 <- nameFilteredForEffect[1, 28:32]
@@ -63,7 +64,10 @@ updateSelectizeInput(session,
     
 #Creating output for info tables for medicalUses.R
     output$sideEffectsTable <- renderDataTable({sideEffectForDrugs})
-    #output$sideEffectsTable1 <- renderTable({sideEffectForDrugs1})
+    output$sideEffectsTable1 <- renderUI({ if( checkSideEffect1 != " ") {
+      renderTable(sideEffectForDrugs1)
+      }
+      })
     #output$sideEffectsTable2 <- renderTable({sideEffectForDrugs2})
     #output$sideEffectsTable3 <- renderTable({sideEffectForDrugs3})
     #output$sideEffectsTable4 <- renderTable({sideEffectForDrugs4})
