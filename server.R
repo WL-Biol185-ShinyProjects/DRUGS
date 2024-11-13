@@ -7,7 +7,7 @@ source("tab3.R")
 source("tab4.R")
 source("tab5.R")
 source("Maps.R")
-source("tab7.R")
+source("Reviews.R")
 
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
 symptom_list <- readRDS("DrugSubandSide.RDS")

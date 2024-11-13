@@ -6,7 +6,7 @@ source("tab3.R")
 source("tab4.R")
 source("tab5.R")
 source("Maps.R")
-source("tab7.R")
+source("Reviews.R")
 
 fluidPage (
   includeCSS("www/homePage.css"),
@@ -23,7 +23,7 @@ fluidPage (
     tab4,
     tab5,
     Maps,
-    tab7
+    Reviews
   )
 )
 
