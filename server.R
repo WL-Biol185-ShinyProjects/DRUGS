@@ -6,7 +6,7 @@ source("medicalUses.R")
 source("tab3.R")
 source("tab4.R")
 source("tab5.R")
-source("tab6.R")
+source("Maps.R")
 source("tab7.R")
 
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
@@ -37,7 +37,7 @@ updateSelectizeInput(session,
     drugNameFiltered <- filterName[1:248000, 2]
     updateSelectizeInput(session, 
                          "drugName", 
-<<<<<<< HEAD
+
                          choices = unique(drugNameFiltered)
     )
     

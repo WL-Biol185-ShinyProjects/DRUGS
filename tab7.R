@@ -1,39 +1,3 @@
-<<<<<<< HEAD
-library(shiny)
-library(leaflet)
-
-
-
-# Define UI for Tab 7
-tab7 <- tabPanel("Map",
-                 h2("Drug Usage Map"),
-                 
-                 
-       
-             
-                 # Sidebar layout with dropdown menu for state selection
-                 
-                 sidebarLayout(
-                   sidebarPanel(
-                     
-                     # Dropdown menu to select a state
-                     
-                     selectInput("state_select", "Select a state:", choices = state.name, selected = "California")
-                   ),
-                   mainPanel(
-                     leafletOutput("us_map")
-                   )
-                 )
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-)
-=======
 tab7 <- tabPanel(
   "Tab7",
   tags$h2("Select your medicine"),
@@ -72,4 +36,3 @@ graph1 <- function (input) {
       ggplot(aes(Effective, Reviews.1)) + geom_point(aes(colour = factor(Drug)))
   )
 }
->>>>>>> 207a03b2bd1b8df9c6a2ea90c987c31f26720c0d
