@@ -112,7 +112,7 @@ function(input, output, session) {
 shinyApp(ui = ui, server = server)
 
 
-#Sever Code to prdduce a heatmap 
+#Sever Code to produce a heatmap 
 function(input, output, session) {
   
   # Sample data to use for the map layers (e.g., different data points for drug usage)
@@ -148,6 +148,8 @@ function(input, output, session) {
              yaxis = list(title = "Drug Usage"))
   })
 }
+
+
 function(input, output, session) {
   
   # Reactive data for filtering based on input
