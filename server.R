@@ -6,7 +6,7 @@ source("medicalUses.R")
 source("tab3.R")
 source("tab4.R")
 source("tab5.R")
-source("tab6.R")
+source("Maps.R")
 source("tab7.R")
 
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
@@ -45,17 +45,26 @@ function(input, output, session) {
     #Creating filter for drug selected in drugName search bar for medicalUses.R
     nameFilteredForEffect <- filter(symptom_list, name == input$drugName)
     
+    nameFilteredForEffect[1, 8:49] <- trimws(nameFilteredForEffect[1, 8:49])
+    
     #Creating tables to select for info needed for medicalUses.R
     sideEffectForDrugs <- nameFilteredForEffect[1, 8:12]
     sideEffectForDrugs1 <- nameFilteredForEffect[1, 13:17]
     checkSideEffect1 <- nameFilteredForEffect[1, 13]
-    #sideEffectForDrugs2 <- nameFilteredForEffect[1, 18:22]
-    #sideEffectForDrugs3 <- nameFilteredForEffect[1, 23:27]
-    #sideEffectForDrugs4 <- nameFilteredForEffect[1, 28:32]
-    #sideEffectForDrugs5 <- nameFilteredForEffect[1, 33:37]
-    #sideEffectForDrugs6 <- nameFilteredForEffect[1, 38:42]
-    #sideEffectForDrugs7 <- nameFilteredForEffect[1, 43:47]
-    #sideEffectForDrugs8 <- nameFilteredForEffect[1, 48:49]
+    sideEffectForDrugs2 <- nameFilteredForEffect[1, 18:22]
+    checkSideEffect2 <- nameFilteredForEffect[1, 18]
+    sideEffectForDrugs3 <- nameFilteredForEffect[1, 23:27]
+    checkSideEffect3 <- nameFilteredForEffect[1, 23]
+    sideEffectForDrugs4 <- nameFilteredForEffect[1, 28:32]
+    checkSideEffect4 <- nameFilteredForEffect[1, 28]
+    sideEffectForDrugs5 <- nameFilteredForEffect[1, 33:37]
+    checkSideEffect5 <- nameFilteredForEffect[1, 33]
+    sideEffectForDrugs6 <- nameFilteredForEffect[1, 38:42]
+    checkSideEffect6 <- nameFilteredForEffect[1, 38]
+    sideEffectForDrugs7 <- nameFilteredForEffect[1, 43:47]
+    checkSideEffect7 <- nameFilteredForEffect[1, 43]
+    sideEffectForDrugs8 <- nameFilteredForEffect[1, 48:49]
+    checkSideEffect8 <- nameFilteredForEffect[1, 48]
     alternativeDrugs <- nameFilteredForEffect[1, 3:7]
     therapeuticClass <- nameFilteredForEffect[1, 57]
     habitForming <- nameFilteredForEffect[1, 56]
@@ -64,17 +73,40 @@ function(input, output, session) {
     
     #Creating output for info tables for medicalUses.R
     output$sideEffectsTable <- renderDataTable({sideEffectForDrugs})
-    output$sideEffectsTable1 <- renderUI({ if( checkSideEffect1 != " ") {
+    #Creating conditional outputs for info tables for medicalUses.R
+    output$sideEffectsTable1 <- renderUI({ if(checkSideEffect1 != "") {
       renderTable(sideEffectForDrugs1)
     }
     })
-    #output$sideEffectsTable2 <- renderTable({sideEffectForDrugs2})
-    #output$sideEffectsTable3 <- renderTable({sideEffectForDrugs3})
-    #output$sideEffectsTable4 <- renderTable({sideEffectForDrugs4})
-    #output$sideEffectsTable5 <- renderTable({sideEffectForDrugs5})
-    #output$sideEffectsTable6 <- renderTable({sideEffectForDrugs6})
-    #output$sideEffectsTable7 <- renderTable({sideEffectForDrugs7})
-    #output$sideEffectsTable8 <- renderTable({sideEffectForDrugs8})
+    output$sideEffectsTable2 <- renderUI({ if(checkSideEffect2 != "") {
+      renderTable(sideEffectForDrugs2)
+    }
+    })
+    output$sideEffectsTable3 <- renderUI({ if(checkSideEffect3 != "") {
+      renderTable(sideEffectForDrugs3)
+    }
+    })
+    output$sideEffectsTable4 <- renderUI({ if(checkSideEffect4 != "") {
+      renderTable(sideEffectForDrugs4)
+    }
+    })
+    output$sideEffectsTable5 <- renderUI({ if(checkSideEffect5 != "") {
+      renderTable(sideEffectForDrugs5)
+    }
+    })
+    output$sideEffectsTable6 <- renderUI({ if(checkSideEffect6 != "") {
+      renderTable(sideEffectForDrugs6)
+    }
+    })
+    output$sideEffectsTable7 <- renderUI({ if(checkSideEffect7 != "") {
+      renderTable(sideEffectForDrugs7)
+    }
+    })
+    output$sideEffectsTable8 <- renderUI({ if(checkSideEffect8 != "") {
+      renderTable(sideEffectForDrugs8)
+    }
+    })
+    #Creating table output for medicalUses.R
     output$alternativeDrugsTable <- renderTable({alternativeDrugs})
     output$chemicalClassTable <- renderTable({chemicalClass})
     output$actionClassTable <- renderTable({actionClass})
@@ -103,6 +135,7 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
+<<<<<<< HEAD
 }
 
 
@@ -114,6 +147,8 @@ shinyApp(ui = ui, server = server)
 
 #Sever Code to produce a heatmap 
 function(input, output, session) {
+=======
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
   
   # Sample data to use for the map layers (e.g., different data points for drug usage)
   sample_data <- data.frame(
@@ -147,11 +182,15 @@ function(input, output, session) {
              xaxis = list(title = "Year"),
              yaxis = list(title = "Drug Usage"))
   })
+<<<<<<< HEAD
 }
 
 
 function(input, output, session) {
   
+=======
+
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
   # Reactive data for filtering based on input
   filteredData <- reactive({
     drug_data %>%
@@ -171,6 +210,10 @@ function(input, output, session) {
     
   })
   
+  output$graph1 <- graph1(input)
+  output$graph2 <- graph2(input)
+  output$graph3 <- graph3(input)
   
+  }
   
-  
+

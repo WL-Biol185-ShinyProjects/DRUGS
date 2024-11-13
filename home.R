@@ -3,50 +3,84 @@ library(dplyr)
 home <- tabPanel(
   "Name2",
   tags$h2("Select your medicine"),
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
   div(class = "content",
       h2("About Us"),
       p("We provide accurate, up-to-date information on a variety of drugs, 
                  their uses, effects, and the latest research."),
       
+<<<<<<< HEAD
       div(class = "card",
+=======
+  div(class = "card",
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
           h3("Symptoms"),
           p("Explore the various categories of drugs including prescription 
                      medications, over-the-counter drugs, and recreational substances."),
           actionButton("learnMore", "Learn More", class = "btn btn-primary")
       ),
       
+<<<<<<< HEAD
       div(class = "card",
+=======
+  
+  div(class = "card",
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
           h3("Medical Uses"),
           p("Stay informed with the latest studies and findings on the safety 
                      and efficacy of different drugs."),
           actionButton("research", "Read More", class = "btn btn-primary")
       ),
       
+<<<<<<< HEAD
       div(class = "card",
+=======
+  
+  div(class = "card",
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
           h3("Cost"),
           p("Have questions? Feel free to reach out to us for more information."),
           actionButton("contact", "Get in Touch", class = "btn btn-primary")
       ),
       
+<<<<<<< HEAD
       div(class = "card",
+=======
+      
+  div(class = "card",
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
           h3("Alternatives"),
           p("Have questions? Feel free to reach out to us for more information."),
           actionButton("contact_alt", "Get in Touch", class = "btn btn-primary")
       ),
       
+<<<<<<< HEAD
       div(class = "card",
+=======
+      
+  div(class = "card",
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
           h3("Reviews"),
           p("Have questions? Feel free to reach out to us for more information."),
           actionButton("contact_efficacy", "Get in Touch", class = "btn btn-primary")
       ),
       
+<<<<<<< HEAD
       div(class = "card",
+=======
+      
+  div(class = "card",
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
           h3("Insert Here"),
           p("Have questions? Feel free to reach out to us for more information."),
           actionButton("contact_prevalence", "Get in Touch", class = "btn btn-primary")
       )
   )
 )
+<<<<<<< HEAD
 
 
 #Map Output 
@@ -68,10 +102,13 @@ fluidPage(
 
 
 
+=======
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
   mainPanel(
             
   )
 
+<<<<<<< HEAD
 function(input, output) {
   observeEvent(input$learnMore, {
     showModal(modalDialog(
@@ -135,4 +172,7 @@ function(input, output) {
   
   
   
+=======
+
+>>>>>>> 54e342a3f9e035452432ffb3fe22540aa791b776
 

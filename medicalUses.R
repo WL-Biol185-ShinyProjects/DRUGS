@@ -4,6 +4,7 @@ library(dplyr)
 medicalUses <- tabPanel(
   "Drug Information",
   tags$h1("What medical uses your medicine has"), 
+sidebarLayout(
 #Creating search bar for illness
    sidebarPanel(
     selectizeInput(
@@ -22,14 +23,14 @@ medicalUses <- tabPanel(
   mainPanel(
   h2("Side Effects of Drug"),
     dataTableOutput("sideEffectsTable"),
-    tableOutput("sideEffectsTable1"),
-    tableOutput("sideEffectsTable2"),
-    tableOutput("sideEffectsTable3"),
-    tableOutput("sideEffectsTable4"),
-    tableOutput("sideEffectsTable5"),
-    tableOutput("sideEffectsTable6"),
-    tableOutput("sideEffectsTable7"),
-    tableOutput("sideEffectsTable8"),
+    uiOutput("sideEffectsTable1"),
+    uiOutput("sideEffectsTable2"),
+    uiOutput("sideEffectsTable3"),
+    uiOutput("sideEffectsTable4"),
+    uiOutput("sideEffectsTable5"),
+    uiOutput("sideEffectsTable6"),
+    uiOutput("sideEffectsTable7"),
+    uiOutput("sideEffectsTable8"),
   h2("Alterantive Drugs for Illness"),
     tableOutput("alternativeDrugsTable"),
   h2("Chemical Class"),
@@ -42,6 +43,6 @@ medicalUses <- tabPanel(
     tableOutput("habitFormingTable")
   ) 
 )
-  
+)  
 
 
