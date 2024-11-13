@@ -63,5 +63,8 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
+  
+  output$graph1 <- graph1(input)
+  
 }
 
