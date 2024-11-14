@@ -1,4 +1,6 @@
-tab7 <- tabPanel(
+UnduplicatedDrug2 <- read.csv("UnduplicatedDrug2.csv")
+
+Reviews <- tabPanel(
   "Reviews",
   tags$h2("Reviews based on Satisfaction, Ease of Use, and Effectiveness"),
   
@@ -29,7 +31,8 @@ graph1 <- function(input) {
                      (Drug)
                      )
                    )
-    
+  })
+}
 graph2 <- function(input) {
   renderPlot({
     filter(UnduplicatedDrug2, Condition == input$Condition) %>%
@@ -39,6 +42,8 @@ graph2 <- function(input) {
                       (Drug)
                       )
                     )
+  })
+}
     
 graph3 <- function(input) {
   renderPlot({
@@ -50,14 +55,5 @@ graph3 <- function(input) {
                       )
                     )
                  })
-             }
-          })
-        }
-   })
-
 }
-
-output$graph1 <- graph1(input)
-output$graph2 <- graph2(input)
-output$graph3 <- graph3(input)
 
