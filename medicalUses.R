@@ -22,7 +22,7 @@ sidebarLayout(
 #Generating info classifications and info from tables in dataset 
   mainPanel(
   h2("Side Effects of Drug"),
-    dataTableOutput("sideEffectsTable"),
+    tableOutput("sideEffectsTable"),
     uiOutput("sideEffectsTable1"),
     uiOutput("sideEffectsTable2"),
     uiOutput("sideEffectsTable3"),
