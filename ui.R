@@ -16,7 +16,7 @@ fluidPage (
   
   # Header
   div(class = "header",
-      h1("Welcome to Drug Sqaud!!!!")
+      h1("Welcome to Drug Squad!!!")
   ),
   navbarPage(
     "Home",
