@@ -140,16 +140,4 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
-<<<<<<< HEAD
-  
-  #output$graph1 <- graph1(input)
-  #output$graph2 <- graph2(input)
-  #output$graph3 <- graph3(input)
-  
-  }
-=======
-
 }
->>>>>>> f26078acc348565e4d965d60c804431de59097f1
-  
-
