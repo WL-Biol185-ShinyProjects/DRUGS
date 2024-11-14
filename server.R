@@ -1,18 +1,23 @@
 library(shiny)
 library(dplyr)
-
+library(leaflet)
+library(plotly)
 source("home.R")
 source("medicalUses.R")
 source("tab3.R")
 source("tab4.R")
 source("tab5.R")
 source("Maps.R")
-source("tab7.R")
+source("Reviews.R")
 
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
 symptom_list <- readRDS("DrugSubandSide.RDS")
 
 function(input, output, session) {
+  
+  output$graph1 <- graph1(input)
+  output$graph2 <- graph2(input)
+  output$graph3 <- graph3(input)
   
   #Filtering for only illness names 
   illnessNameSubset <- unique(symptom_list[1:248000, 50])
@@ -135,11 +140,16 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
+<<<<<<< HEAD
   
   #output$graph1 <- graph1(input)
   #output$graph2 <- graph2(input)
   #output$graph3 <- graph3(input)
   
   }
+=======
+
+}
+>>>>>>> f26078acc348565e4d965d60c804431de59097f1
   
 
