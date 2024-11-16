@@ -40,17 +40,49 @@ Longer_Prices$year <- as.numeric(Longer_Prices$year)
 Longer_Prices$type <- as.character(Longer_Prices$type)
 ```
 
+```{r}
+Spread_Prices <- spread(Longer_Prices, type, value)
+```
+
 
 ```{r}
-Medicine_Details_melt <- melt(Medicine_Details, id.vars = "Manufacturer", variable.name = "Category", value.name = "Value")
+Medicine_Details <- subset(Medicine_Details, select = -c(Medicine.Name, Uses, Side_effects, Image.URL))
 
-Medicine_Det_Filtered <- filter(Medicine_Details_melt, Category %in% c("Excellent.Review..", 
-                                                                   "Poor.Review..", 
-                                                                    "Average.Review..") )
+Medicine_Details$Composition <- stringr::str_remove_all(Medicine_Details$Composition, "\\([^)]*\\)")
 
-  ggplot(Medicine_Det_Filtered, aes(x = Category, y = Value)) + geom_point()
+reviews_clean <- data.frame(drug = Medicine_Details$Composition)
+ 
+efun <- function(x) {
+  d <- filter(Medicine_Details, Composition == x)
+  sum(d$Excellent.Review..)
+}
 
+afun <- function(x) {
+  d <- filter(Medicine_Details, Composition == x)
+  sum(d$Average.Review..)
+}
+
+pfun <- function(x) {
+  d <- filter(Medicine_Details, Composition == x)
+  sum(d$Poor.Review..)
+}
+
+reviews_clean$excellent <- lapply(reviews_clean$drug, efun)
+
+reviews_clean$average <- lapply(reviews_clean$drug, afun)
+
+reviews_clean$poor <- lapply(reviews_clean$drug, pfun)
+
+reviews_clean <- reviews_clean[ !duplicated(reviews_clean$drug),]
+reviews_clean
+
+
+  
+#Medicine_Details_test <- Medicine_Details[stringr::str_extract(Medicine_Details$Composition, coll("Apixiban", ignore_case = TRUE)), ]
+                    
 ```
+
+
 
 # Merging data
 
@@ -64,6 +96,28 @@ mergedData <- full_join(NoNA_Undup_Drug_Prices, NewName1, by = "Brnd_Name")
 ```
 
 
+```{r}
+DDI_data <- read.csv("~/DRUGS/data of multiple-type drug-drug interactions/DDI_data.csv")
+
+DDI_data_test <- filter(DDI_data, drug1_name == "Apixaban")
+
+reviews_clean <- as.data.frame(reviews_clean)
+reviews_clean$drug <- trimws(reviews_clean$drug)
+
+reviews_test <- filter(reviews_clean, drug == "Apixaban")
+
+
+Joined_DDI_Details <- left_join(filter(DDI_data, drug1_name == "Apixaban" | drug1_name == "Warfarin"),
+                                filter(reviews_clean, drug == "Apixaban" | drug == "Warfarin"),
+                                by =  c("drug1_name" = "drug"))
+```
+
+
+
+
+
+
+
 
 # 
 t <- c("drug1 other stuff", "drug2 other stuff 10 mg")
@@ -71,4 +125,4 @@ t <- c("drug1 other stuff", "drug2 other stuff 10 mg")
 sapply(1, function(x { x[1]})
 
 
-
+table$colnam(sapply(strsplit))
