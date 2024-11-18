@@ -6,7 +6,7 @@ library(plotly)
 source("home.R")
 source("medicalUses.R")
 source("Cost_tab.R")
-source("tab4.R")
+source("interaction_tab.R")
 source("Clinical_Trails.R")
 source("Maps.R")
 source("Reviews.R")
@@ -23,7 +23,7 @@ fluidPage (
     home,
     medicalUses,
     Costs,
-    tab4,
+    Interactions,
     Clinical_Trails,
     Maps,
     Reviews

@@ -2,6 +2,10 @@ library(shiny)
 library(dplyr)
 library(leaflet)
 library(plotly)
+library(ggplot2)
+library(maps)
+
+
 source("home.R")
 source("medicalUses.R")
 source("Cost_tab.R")
@@ -25,7 +29,7 @@ function(input, output, session) {
   output$Tot_DrugClaims_Plot <- Tot_DrugClaims_Plot(input)
   
   #Filtering for only illness names 
-  illnessNameSubset <- unique(symptom_list[1:248000, 50])
+  illnessNameSubset <- unique(symptom_list$use0)
   
   #Filtering for Brand Name for Cost_tab.R
 
@@ -56,7 +60,7 @@ function(input, output, session) {
                            use4 == input$drugIllness
     )
     #Creating filter for drug name for medicalUses.R
-    drugNameFiltered <- filterName[1:248000, 2]
+    drugNameFiltered <- filterName$name
     updateSelectizeInput(session, 
                          "drugName", 
                          choices = unique(drugNameFiltered),
@@ -159,7 +163,7 @@ function(input, output, session) {
   })
 
 
-}
+
 
 
 
@@ -202,11 +206,7 @@ drug_usage_data <- data.frame(
   latitude = state.center$y
 )
 
-library(ggplot2)
-library(maps)
-library(dplyr)
-
- function(input, output, session) {
+ 
   
   output$heatmap <- renderPlot({
     # Filter data based on the selected state
@@ -237,7 +237,7 @@ library(dplyr)
         color = "Usage Rate"
       )
   })
-}
+
 
 
 
@@ -254,8 +254,6 @@ clinical_trials <- data.frame(
   stringsAsFactors = FALSE
 )
 
-
-function(input, output, session) {
   
   observeEvent(input$search, {
     # Check if condition and treatment are selected
