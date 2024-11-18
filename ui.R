@@ -7,7 +7,7 @@ source("home.R")
 source("medicalUses.R")
 source("Cost_tab.R")
 source("tab4.R")
-source("tab5.R")
+source("Clinical_Trails.R")
 source("Maps.R")
 source("Reviews.R")
 
@@ -24,10 +24,15 @@ fluidPage (
     medicalUses,
     Costs,
     tab4,
-    tab5,
+    Clinical_Trails,
     Maps,
     Reviews
   )
+  
+  
+  
+  
+  
 )
 
 

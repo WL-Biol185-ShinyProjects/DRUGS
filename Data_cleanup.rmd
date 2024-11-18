@@ -10,16 +10,10 @@ library(reshape2)
 library(dplyr)
 ```
 
-```{r}
-NADAC_data_2024 <- read.csv("https://download.medicaid.gov/data/nadac-national-average-drug-acquisition-cost-10-16-2024.csv")
 
-```
 ```{r}
-Drug_Bank_Interacts <- read.delim("~/DRUGS/ChCh-Miner_durgbank-chem-chem.tsv", header=FALSE)
-Drug_NDC_PropreitaryName <- read.csv("~/DRUGS/20220906_product.csv")
 Drug_Prices <- read.csv("~/DRUGS/Medicaid_Spending_by_Drug_2022.csv")
-```
-```{r}
+
 Undup_Drug_Prices <- Drug_Prices[ !duplicated(Drug_Prices$Brnd_Name),]
 Undup_Drug_Prices
 
@@ -42,10 +36,14 @@ Longer_Prices$type <- as.character(Longer_Prices$type)
 
 ```{r}
 Spread_Prices <- spread(Longer_Prices, type, value)
+
+write.csv(Spread_Prices, file = "Spread_Prices.csv")
 ```
 
 
 ```{r}
+Medicine_Details <- read.csv("~/DRUGS/Medicine_Details.csv")
+
 Medicine_Details <- subset(Medicine_Details, select = -c(Medicine.Name, Uses, Side_effects, Image.URL))
 
 Medicine_Details$Composition <- stringr::str_remove_all(Medicine_Details$Composition, "\\([^)]*\\)")
@@ -76,6 +74,9 @@ reviews_clean$poor <- lapply(reviews_clean$drug, pfun)
 reviews_clean <- reviews_clean[ !duplicated(reviews_clean$drug),]
 reviews_clean
 
+reviews_clean <- as.data.frame(reviews_clean)
+reviews_clean$drug <- trimws(reviews_clean$drug)
+
 
   
 #Medicine_Details_test <- Medicine_Details[stringr::str_extract(Medicine_Details$Composition, coll("Apixiban", ignore_case = TRUE)), ]
@@ -84,16 +85,7 @@ reviews_clean
 
 
 
-# Merging data
 
-
-
-```{r}
-NewName1 <- data.frame( Medicine_Details, "Brnd_Name" = sapply(strsplit(Medicine_Details$Medicine.Name, split = " ", fixed = TRUE), function(x) {x [1] })  )
-
-mergedData <- full_join(NoNA_Undup_Drug_Prices, NewName1, by = "Brnd_Name")
-
-```
 
 
 ```{r}
@@ -101,15 +93,15 @@ DDI_data <- read.csv("~/DRUGS/data of multiple-type drug-drug interactions/DDI_d
 
 DDI_data_test <- filter(DDI_data, drug1_name == "Apixaban")
 
-reviews_clean <- as.data.frame(reviews_clean)
-reviews_clean$drug <- trimws(reviews_clean$drug)
-
 reviews_test <- filter(reviews_clean, drug == "Apixaban")
-
 
 Joined_DDI_Details <- left_join(filter(DDI_data, drug1_name == "Apixaban" | drug1_name == "Warfarin"),
                                 filter(reviews_clean, drug == "Apixaban" | drug == "Warfarin"),
                                 by =  c("drug1_name" = "drug"))
+
+write.csv(DDI_data, file = "DDI_data.csv")
+write.csv(reviews_clean, file = "reviews_clean.csv")
+
 ```
 
 
