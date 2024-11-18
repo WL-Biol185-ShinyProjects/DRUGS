@@ -1,16 +1,5 @@
-.Rproj
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+*.Rproj*
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 6632c09ce9c55f6dcf90afbb69d498d91691b7e0
->>>>>>> dae9867cb0ddc48656c4fd27fc9f78c8ead6f678
-=======
->>>>>>> 8185549414eedeb0c3b598e7f0f55fe125861b17
 # History files
 .Rhistory
 .Rapp.history

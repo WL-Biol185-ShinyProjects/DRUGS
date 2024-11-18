@@ -1,18 +1,23 @@
 library(shiny)
 library(dplyr)
 library(leaflet)
+library(plotly)
 source("home.R")
 source("medicalUses.R")
 source("tab3.R")
 source("tab4.R")
 source("tab5.R")
 source("Maps.R")
-source("tab7.R")
+source("Reviews.R")
 
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
 symptom_list <- readRDS("DrugSubandSide.RDS")
 
 function(input, output, session) {
+  
+  output$graph1 <- graph1(input)
+  output$graph2 <- graph2(input)
+  output$graph3 <- graph3(input)
   
   #Filtering for only illness names 
   illnessNameSubset <- unique(symptom_list[1:248000, 50])
@@ -72,7 +77,7 @@ function(input, output, session) {
     chemicalClass <- nameFilteredForEffect[1, 55]
     
     #Creating output for info tables for medicalUses.R
-    output$sideEffectsTable <- renderDataTable({sideEffectForDrugs})
+    output$sideEffectsTable <- renderTable({sideEffectForDrugs})
     #Creating conditional outputs for info tables for medicalUses.R
     output$sideEffectsTable1 <- renderUI({ if(checkSideEffect1 != "") {
       renderTable(sideEffectForDrugs1)
@@ -135,6 +140,7 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
+<<<<<<< HEAD
 
 }
 
@@ -215,3 +221,6 @@ library(dplyr)
       )
   })
 }
+=======
+}
+>>>>>>> 668530c511497a8a0260304d92b898065dba621f
