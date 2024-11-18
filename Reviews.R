@@ -2,7 +2,7 @@ UnduplicatedDrug2 <- read.csv("UnduplicatedDrug2.csv")
 
 Reviews <- tabPanel(
   "Reviews",
-  tags$h2("Reviews based on Satisfaction, Ease of Use, and Effectiveness"),
+  tags$h2("Reviews based on Effectivness, Ease of Use, and Satisfaction of Drugs"),
   
   sidebarPanel(
     selectizeInput(
@@ -27,10 +27,12 @@ graph1 <- function(input) {
     filter(UnduplicatedDrug2, Condition == input$Condition) %>%
      ggplot(aes(Effective, Reviews.1)) +
        geom_point(aes
-                   (colour = factor
-                     (Drug)
-                     )
-                   )
+                  (colour = factor
+                    (Drug)
+                    )
+                  )+
+       ylab("Reviews")+
+       ggtitle("Effectiveness of Drug based on Reviews")
   })
 }
 graph2 <- function(input) {
@@ -38,10 +40,12 @@ graph2 <- function(input) {
     filter(UnduplicatedDrug2, Condition == input$Condition) %>%
       ggplot(aes(EaseOfUse, Reviews.1)) +  
         geom_point(aes
-                    (colour = factor
-                      (Drug)
-                      )
-                    )
+                   (colour = factor
+                     (Drug)
+                     )
+                   )+
+        ylab("Reviews")+
+        ggtitle("Ease of Use of Drug based on Reviews")
   })
 }
     
@@ -50,10 +54,12 @@ graph3 <- function(input) {
     filter(UnduplicatedDrug2, Condition == input$Condition) %>%
       ggplot(aes(Satisfaction, Reviews.1)) +
         geom_point(aes
-                    ( colour = factor
-                      (Drug)
-                      )
-                    )
+                   (colour = factor
+                     (Drug)
+                     )
+                   )+
+        ylab("Reviews")+
+        ggtitle("Satisfaction of Drug based on Reviews")
                  })
 }
 
