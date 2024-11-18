@@ -4,7 +4,7 @@ library(leaflet)
 library(plotly)
 source("home.R")
 source("medicalUses.R")
-source("tab3.R")
+source("Cost_tab.R")
 source("tab4.R")
 source("tab5.R")
 source("Maps.R")
@@ -14,13 +14,30 @@ source("Reviews.R")
 symptom_list <- readRDS("DrugSubandSide.RDS")
 
 function(input, output, session) {
-  
+  #Ryan
   output$graph1 <- graph1(input)
   output$graph2 <- graph2(input)
   output$graph3 <- graph3(input)
+  #Daniel
+  output$Avg_Spend_Plot <- Avg_Spend_Plot(input)
+  output$Tot_DrugSpend_Plot <- Tot_DrugSpend_Plot(input)
+  output$Tot_Spend_Plot <- Tot_Spend_Plot(input)
+  output$Tot_DrugClaims_Plot <- Tot_DrugClaims_Plot(input)
   
   #Filtering for only illness names 
   illnessNameSubset <- unique(symptom_list[1:248000, 50])
+  
+  #Filtering for Brand Name for Cost_tab.R
+
+  observe({
+    updateSelectizeInput(session,
+                         "Brand_Name",
+                         choices = unique(Spread_Prices$Brnd_Name)) 
+  
+    filterName <- filter(Spread_Prices, 
+                         Brnd_Name %in% input$Brand_Name ) 
+    }
+  )
   
   #Server side Selectization for drug illness for medicalUses.R    
   updateSelectizeInput(session,
