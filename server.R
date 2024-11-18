@@ -20,7 +20,7 @@ function(input, output, session) {
   output$graph3 <- graph3(input)
   
   #Filtering for only illness names 
-  illnessNameSubset <- unique(symptom_list[1:248000, 50])
+  illnessNameSubset <- unique(symptom_list$use0)
   
   #Server side Selectization for drug illness for medicalUses.R    
   updateSelectizeInput(session,
@@ -39,7 +39,7 @@ function(input, output, session) {
                            use4 == input$drugIllness
     )
     #Creating filter for drug name for medicalUses.R
-    drugNameFiltered <- filterName[1:248000, 2]
+    drugNameFiltered <- filterName$name
     updateSelectizeInput(session, 
                          "drugName", 
                          choices = unique(drugNameFiltered),
