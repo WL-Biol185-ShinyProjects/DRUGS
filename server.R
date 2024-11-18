@@ -140,4 +140,87 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
+<<<<<<< HEAD
+
 }
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Sample data (replace this with your actual data)
+# drug_usage_data should include columns: state, usage_rate, longitude, latitude
+drug_usage_data <- data.frame(
+  state = state.name,
+  usage_rate = runif(50, 0, 1),  # Random usage rate between 0 and 1
+  longitude = state.center$x,
+  latitude = state.center$y
+)
+
+library(ggplot2)
+library(maps)
+library(dplyr)
+
+ function(input, output, session) {
+  
+  output$heatmap <- renderPlot({
+    # Filter data based on the selected state
+    selected_data <- drug_usage_data %>%
+      filter(state == input$state_select)
+    
+    # Load state map data
+    state_map <- map_data("state")
+    
+    # Create heatmap using ggplot2
+    ggplot() +
+      geom_polygon(
+        data = state_map %>% filter(region == tolower(input$state_select)),
+        aes(x = long, y = lat, group = group),
+        fill = "lightgray", color = "black"
+      ) +
+      geom_point(
+        data = selected_data,
+        aes(x = longitude, y = latitude, color = usage_rate),
+        size = 5, alpha = 0.7
+      ) +
+      scale_color_gradient(low = "yellow", high = "red") +
+      theme_minimal() +
+      labs(
+        title = paste("Drug Usage in", input$state_select),
+        x = "Longitude",
+        y = "Latitude",
+        color = "Usage Rate"
+      )
+  })
+}
+=======
+}
+>>>>>>> 668530c511497a8a0260304d92b898065dba621f
