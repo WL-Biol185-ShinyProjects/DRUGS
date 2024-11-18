@@ -6,7 +6,7 @@ source("home.R")
 source("medicalUses.R")
 source("tab3.R")
 source("tab4.R")
-source("tab5.R")
+source("Clinical_Trails.R")
 source("Maps.R")
 source("Reviews.R")
 
@@ -140,7 +140,7 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
-<<<<<<< HEAD
+
 
 }
 
@@ -174,7 +174,7 @@ function(input, output, session) {
 
 
 
-
+#HEATMAP
 
 # Sample data (replace this with your actual data)
 # drug_usage_data should include columns: state, usage_rate, longitude, latitude
@@ -221,6 +221,46 @@ library(dplyr)
       )
   })
 }
-=======
+
+
+
+
+
+
+#CLINICAL TRAILS
+
+clinical_trials <- data.frame(
+  Trial_ID = 1:5,
+  Disease_Type = c("Cancer", "Diabetes", "Cancer", "Cardiovascular", "Diabetes"),
+  Treatment_Type = c("Chemotherapy", "Insulin", "Immunotherapy", "Statins", "Oral medication"),
+  Location = c("New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ"),
+  stringsAsFactors = FALSE
+)
+
+
+function(input, output, session) {
+  
+  observeEvent(input$search, {
+    # Check if condition and treatment are selected
+    if (input$condition == "Select Condition" | input$history == "Select Treatment") {
+      output$results <- renderTable({
+        data.frame(Message = "Please select both a condition and treatment.")
+      })
+      return()  # Stop further processing if inputs are invalid
+    }
+    
+    # Filter trials based on user input
+    filtered_trials <- clinical_trials %>%
+      filter(grepl(input$condition, Disease_Type, ignore.case = TRUE)) %>%
+      filter(grepl(input$history, Treatment_Type, ignore.case = TRUE)) %>%
+      filter(grepl(input$location, Location, ignore.case = TRUE))
+    
+    # Output the filtered trials as a table
+    output$results <- renderTable({
+      if (nrow(filtered_trials) == 0) {
+        return(data.frame(Message = "No matching trials found"))
+      }
+      return(filtered_trials)
+    })
+  })
 }
->>>>>>> 668530c511497a8a0260304d92b898065dba621f
