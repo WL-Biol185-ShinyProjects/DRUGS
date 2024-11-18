@@ -145,10 +145,7 @@ function(input, output, session) {
 
 
   
-  output$graph1 <- graph1(input)
-  output$graph2 <- graph2(input)
-  output$graph3 <- graph3(input)
-  
+
   
   
 
