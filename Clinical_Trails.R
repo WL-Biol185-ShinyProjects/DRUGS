@@ -4,9 +4,6 @@ Clinical_Trails <-
 
 
 
-
-
-
 sidebarLayout(
   sidebarPanel(
     textInput("name", "Patient Name:", value = ""),
