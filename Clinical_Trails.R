@@ -1,6 +1,6 @@
 Clinical_Trails <-
   
-  tabPanel("Clinical Trial Matching")
+  tabPanel("Clinical Trial Matching",
 
 
 
@@ -22,5 +22,5 @@ sidebarLayout(
     tableOutput("results")
   )
 )
-
+)
 
