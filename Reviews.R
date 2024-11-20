@@ -2,7 +2,7 @@ UnduplicatedDrug2 <- read.csv("UnduplicatedDrug2.csv")
 
 Reviews <- tabPanel(
   "Reviews",
-  tags$h2("Reviews based on Effectiveness, Ease of Use, and Satisfaction of Drugs"),
+  tags$h2("Reviews categorized by Effectiveness, Ease of Use, and Satisfaction of Drugs"),
   
   sidebarPanel(
     selectizeInput(
