@@ -1,3 +1,4 @@
+library(tidyverse)
 library(shiny)
 library(dplyr)
 library(leaflet)
@@ -24,20 +25,33 @@ function(input, output, session) {
   output$Tot_Spend_Plot <- Tot_Spend_Plot(input)
   output$Tot_DrugClaims_Plot <- Tot_DrugClaims_Plot(input)
   
+  output$Int_Plot <- Int_Plot(input)
+  output$Int_Rev_Plot <- Int_Rev_Plot(input)
+  
   #Filtering for only illness names 
   illnessNameSubset <- unique(symptom_list[1:248000, 50])
   
-  #Filtering for Brand Name for Cost_tab.R
-
-  observe({
-    updateSelectizeInput(session,
-                         "Brand_Name",
-                         choices = unique(Spread_Prices$Brnd_Name)) 
-  
-    filterName <- filter(Spread_Prices, 
-                         Brnd_Name %in% input$Brand_Name ) 
-    }
+  # Cost Tab
+  updateSelectizeInput(session,
+                       "Brand_Name",
+                       choices = Spread_Prices$Brnd_Name,
+                       server = TRUE
   )
+  
+  #Interaction Tab
+  updateSelectizeInput(session,
+                       "Drug_Name",
+                       choices = DDI_data$drug1_name,
+                       server = TRUE
+  )
+  updateSelectizeInput(session,
+                       "Drug_Name",
+                       choices = reviews_clean$drug,
+                       server = TRUE
+  )
+  
+
+  
   
   #Server side Selectization for drug illness for medicalUses.R    
   updateSelectizeInput(session,
@@ -55,7 +69,7 @@ function(input, output, session) {
                            use3 == input$drugIllness |
                            use4 == input$drugIllness
     )
-    #Creating filter for drug name for medicalUses.R
+    #Creating filter for drug name for medicalUses.Rn
     drugNameFiltered <- filterName[1:248000, 2]
     updateSelectizeInput(session, 
                          "drugName", 
@@ -159,7 +173,7 @@ function(input, output, session) {
   })
 
 
-}
+
 
 
 
@@ -206,7 +220,7 @@ library(ggplot2)
 library(maps)
 library(dplyr)
 
- function(input, output, session) {
+ 
   
   output$heatmap <- renderPlot({
     # Filter data based on the selected state
@@ -237,7 +251,7 @@ library(dplyr)
         color = "Usage Rate"
       )
   })
-}
+
 
 
 
@@ -255,7 +269,7 @@ clinical_trials <- data.frame(
 )
 
 
-function(input, output, session) {
+
   
   observeEvent(input$search, {
     # Check if condition and treatment are selected
