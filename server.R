@@ -13,6 +13,7 @@ source("tab4.R")
 source("Clinical_Trails.R")
 source("Maps.R")
 source("Reviews.R")
+source("Pharmacokinetics_Simulation1.R")
 
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
 symptom_list <- readRDS("DrugSubandSide.RDS")
@@ -228,37 +229,50 @@ drug_usage_data <- data.frame(
 
 
 #CLINICAL TRAILS
-
-clinical_trials <- data.frame(
-  Trial_ID = 1:5,
-  Disease_Type = c("Cancer", "Diabetes", "Cancer", "Cardiovascular", "Diabetes"),
-  Treatment_Type = c("Chemotherapy", "Insulin", "Immunotherapy", "Statins", "Oral medication"),
-  Location = c("New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ"),
-  stringsAsFactors = FALSE
-)
-
   
-  observeEvent(input$search, {
-    # Check if condition and treatment are selected
-    if (input$condition == "Select Condition" | input$history == "Select Treatment") {
-      output$results <- renderTable({
-        data.frame(Message = "Please select both a condition and treatment.")
-      })
-      return()  # Stop further processing if inputs are invalid
-    }
+  # Load the dataset
+  clinical_data <- read.csv("ctg-studies.csv")
+  
     
-    # Filter trials based on user input
-    filtered_trials <- clinical_trials %>%
-      filter(grepl(input$condition, Disease_Type, ignore.case = TRUE)) %>%
-      filter(grepl(input$history, Treatment_Type, ignore.case = TRUE)) %>%
-      filter(grepl(input$location, Location, ignore.case = TRUE))
-    
-    # Output the filtered trials as a table
-    output$results <- renderTable({
-      if (nrow(filtered_trials) == 0) {
-        return(data.frame(Message = "No matching trials found"))
-      }
-      return(filtered_trials)
-    })
+  # Populate the "Location" dropdown 
+  observe({
+    updateSelectInput(session, "Locations", 
+                      choices = sort(unique(clinical_data$Locations)),
+    server = TRUE)
   })
+  
+  # Populate the "Condition" dropdown 
+  observe({
+    updateSelectInput(session, "Conditions", 
+                      choices = sort(unique(clinical_data$Conditions)),
+    server = TRUE)
+                      
+  })
+  
+  # Populate the "Study Status" dropdown 
+  observe({
+    updateSelectInput(session, "StudyStatus", 
+                      choices = sort(unique(clinical_data$StudyStatus)),
+    server = TRUE)
+  })
+  
+  
+    # Reactive filtering of the data
+    filtered_data <- reactive({
+      req(input$search) # Ensure the search button is clicked
+      
+      clinical_data[
+        grepl(input$location, clinical_data$Location, ignore.case = TRUE) &
+          grepl(input$condition, clinical_data$Condition, ignore.case = TRUE) &
+          clinical_data$Status == input$status, 
+      ]
+    })
+    
+    # Output filtered results as a table
+    output$results <- renderTable({
+      filtered_data()
+    })
 }
+
+
+

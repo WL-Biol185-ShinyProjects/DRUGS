@@ -1,7 +1,7 @@
 library(shiny)
 library(dplyr)
 home <- tabPanel(
-  "Home",
+  "Name2",
   tags$h2("Select your medicine"),
 )
 

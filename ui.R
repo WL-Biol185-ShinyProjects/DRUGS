@@ -10,6 +10,7 @@ source("tab4.R")
 source("Clinical_Trails.R")
 source("Maps.R")
 source("Reviews.R")
+source("Pharmacokinetics_Simulation1.R")
 
 fluidPage (
   includeCSS("www/homePage.css"),
@@ -26,7 +27,8 @@ fluidPage (
     tab4,
     Clinical_Trails,
     Maps,
-    Reviews
+    Reviews,
+    Pharmacokinetics_Simulation
   )
   
   
