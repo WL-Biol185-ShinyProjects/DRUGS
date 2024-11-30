@@ -2,14 +2,10 @@ library(shiny)
 library(dplyr)
 library(leaflet)
 library(plotly)
-library(ggplot2)
-library(maps)
-
-
 source("home.R")
 source("medicalUses.R")
-source("tab3.R")
-source("tab4.R")
+source("Cost_tab.R")
+source("interaction_tab.R")
 source("Clinical_Trails.R")
 source("Maps.R")
 source("Reviews.R")
@@ -19,13 +15,30 @@ source("Pharmacokinetics_Simulation1.R")
 symptom_list <- readRDS("DrugSubandSide.RDS")
 
 function(input, output, session) {
-  
+  #Ryan
   output$graph1 <- graph1(input)
   output$graph2 <- graph2(input)
   output$graph3 <- graph3(input)
+  #Daniel
+  output$Avg_Spend_Plot <- Avg_Spend_Plot(input)
+  output$Tot_DrugSpend_Plot <- Tot_DrugSpend_Plot(input)
+  output$Tot_Spend_Plot <- Tot_Spend_Plot(input)
+  output$Tot_DrugClaims_Plot <- Tot_DrugClaims_Plot(input)
   
   #Filtering for only illness names 
-  illnessNameSubset <- unique(symptom_list$use0)
+  illnessNameSubset <- unique(symptom_list[1:248000, 50])
+  
+  #Filtering for Brand Name for Cost_tab.R
+
+  observe({
+    updateSelectizeInput(session,
+                         "Brand_Name",
+                         choices = unique(Spread_Prices$Brnd_Name)) 
+  
+    filterName <- filter(Spread_Prices, 
+                         Brnd_Name %in% input$Brand_Name ) 
+    }
+  )
   
   #Server side Selectization for drug illness for medicalUses.R    
   updateSelectizeInput(session,
@@ -44,7 +57,7 @@ function(input, output, session) {
                            use4 == input$drugIllness
     )
     #Creating filter for drug name for medicalUses.R
-    drugNameFiltered <- filterName$name
+    drugNameFiltered <- filterName[1:248000, 2]
     updateSelectizeInput(session, 
                          "drugName", 
                          choices = unique(drugNameFiltered),
@@ -147,7 +160,7 @@ function(input, output, session) {
   })
 
 
-
+}
 
 
 
@@ -190,7 +203,11 @@ drug_usage_data <- data.frame(
   latitude = state.center$y
 )
 
- 
+library(ggplot2)
+library(maps)
+library(dplyr)
+
+ function(input, output, session) {
   
   output$heatmap <- renderPlot({
     # Filter data based on the selected state
@@ -221,7 +238,7 @@ drug_usage_data <- data.frame(
         color = "Usage Rate"
       )
   })
-
+}
 
 
 
@@ -229,6 +246,18 @@ drug_usage_data <- data.frame(
 
 
 #CLINICAL TRAILS
+
+clinical_trials <- data.frame(
+  Trial_ID = 1:5,
+  Disease_Type = c("Cancer", "Diabetes", "Cancer", "Cardiovascular", "Diabetes"),
+  Treatment_Type = c("Chemotherapy", "Insulin", "Immunotherapy", "Statins", "Oral medication"),
+  Location = c("New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ"),
+  stringsAsFactors = FALSE
+)
+
+
+function(input, output, session) {
+
   
   # Load the dataset
   clinical_data <- read.csv("ctg-studies.csv")

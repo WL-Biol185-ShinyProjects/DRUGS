@@ -1,13 +1,8 @@
-library(ggplot2)
-
-
-
 
 # Define UI for Tab 6
 Maps <- tabPanel("Map",
                  h2("Drug Usage Map"),
                  
-        
                  
                  
                  
@@ -23,15 +18,8 @@ Maps <- tabPanel("Map",
                    mainPanel(
                      plotOutput("heatmap")
                    )
-                 ),
-           
-                
+                 )
                  
                  
-                 
-                 
-                 
-                       
-              
                  
 )     
