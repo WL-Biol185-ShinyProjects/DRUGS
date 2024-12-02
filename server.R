@@ -274,15 +274,11 @@ clinical_trials <- data.frame(
 )
 
 
-<<<<<<< HEAD
-function(input, output, session) {
 
   
   # Load the dataset
   clinical_data <- read.csv("ctg-studies.csv")
-=======
 
->>>>>>> e23ac17c742d02229554e902c66ba7f9166178ce
   
     
   # Populate the "Location" dropdown 
