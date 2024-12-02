@@ -77,8 +77,10 @@ reviews_clean
 reviews_clean <- as.data.frame(reviews_clean)
 reviews_clean$drug <- trimws(reviews_clean$drug)
 
+reviews_clean$excellent <- as.numeric(reviews_clean$excellent)
+reviews_clean$average <- as.numeric(reviews_clean$average)
+reviews_clean$poor <- as.numeric(reviews_clean$poor)
 
-  
 #Medicine_Details_test <- Medicine_Details[stringr::str_extract(Medicine_Details$Composition, coll("Apixiban", ignore_case = TRUE)), ]
                     
 ```
@@ -100,7 +102,8 @@ Joined_DDI_Details <- left_join(filter(DDI_data, drug1_name == "Apixaban" | drug
                                 by =  c("drug1_name" = "drug"))
 
 write.csv(DDI_data, file = "DDI_data.csv")
-write.csv(reviews_clean, file = "reviews_clean.csv")
+write_csv(reviews_clean, file = "reviews_clean.csv")
+
 
 ```
 

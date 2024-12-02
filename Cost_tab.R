@@ -1,9 +1,11 @@
+
 library(tidyverse)
 library(reshape2)
 library(d3heatmap)
 library(ggplot2)
 
 Spread_Prices <- read.csv("Spread_Prices.csv")
+
 
 Costs <- tabPanel(
   "Costs",
@@ -13,7 +15,7 @@ Costs <- tabPanel(
     selectizeInput(
       "Brand_Name",
       "What is the Brand Name of the drug you are inquiring about?",
-      choices = Spread_Prices$Brnd_Name
+      choices = NULL
     )
   ),
   
@@ -22,11 +24,18 @@ Costs <- tabPanel(
     plotOutput('Avg_Spend_Plot'),
     plotOutput('Tot_DrugSpend_Plot'),
     plotOutput('Tot_Spend_Plot'),
-    plotOutput('Tot_DrugClaims_Plot')
+    plotOutput('Tot_DrugClaims_Plot'),
+    
+    
   )
 )
 
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
 
+
+Spread_Prices <- read.csv("Spread_Prices.csv")
 
 # Comparing average spending per drug over time
 Cost_Filtered_Drug <- filter(Spread_Prices, Brnd_Name == "Heather")
