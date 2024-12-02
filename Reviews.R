@@ -2,7 +2,7 @@ UnduplicatedDrug2 <- read.csv("UnduplicatedDrug2.csv")
 
 Reviews <- tabPanel(
   "Reviews",
-  tags$h2("Reviews based on Satisfaction, Ease of Use, and Effectiveness"),
+  tags$h2("Reviews categorized by Effectiveness, Ease of Use, and Satisfaction of Drugs"),
   
   sidebarPanel(
     selectizeInput(
@@ -30,7 +30,9 @@ graph1 <- function(input) {
                    (colour = factor
                      (Drug)
                      )
-                   )
+                   )+
+      ylab("Reviews")+
+      ggtitle("Effectiveness of Drugs based on Reviews")
   })
 }
 graph2 <- function(input) {
@@ -41,7 +43,9 @@ graph2 <- function(input) {
                     (colour = factor
                       (Drug)
                       )
-                    )
+                    )+
+      ylab("Reviews")+
+      ggtitle("Ease of Use of Drugs based on Reviews")
   })
 }
     
@@ -53,7 +57,9 @@ graph3 <- function(input) {
                     ( colour = factor
                       (Drug)
                       )
-                    )
+                    )+
+      ylab("Reviews")+
+      ggtitle("Satisfaction of Drugs based on Reviews")
                  })
 }
 
