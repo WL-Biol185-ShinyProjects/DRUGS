@@ -1,9 +1,3 @@
-library(tidyverse)
-library(reshape2)
-library(ggplot2)
-
-Spread_Prices <- read.csv("Spread_Prices.csv")
-
 Costs <- tabPanel(
   "Costs",
   tags$h2("Costs of drugs covered by Medicaid"),
@@ -27,7 +21,11 @@ Costs <- tabPanel(
   )
 )
 
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
 
+Spread_Prices <- read.csv("Spread_Prices.csv")
 # Comparing average spending per drug over time
 Cost_Filtered_Drug <- filter(Spread_Prices, Brnd_Name == "Heather")
 
