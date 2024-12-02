@@ -1,7 +1,6 @@
 library(shiny)
 library(dplyr)
 library(leaflet)
-library(plotly)
 
 source("home.R")
 source("medicalUses.R")
