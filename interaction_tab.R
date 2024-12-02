@@ -12,7 +12,15 @@ Interactions <- tabPanel(
   
   sidebarPanel(
     selectizeInput(
-      "Drug_Name",
+      "Drug_Names",
+      "What is the name of the drug you are inquiring about?",
+      choices = NULL
+    )
+  ),
+  
+  sidebarPanel(
+    selectizeInput(
+      "Drug_Namess",
       "What is the name of the drug you are inquiring about?",
       choices = NULL
     )
@@ -49,7 +57,7 @@ ggplot(Filtered_DDI_Data,
 Int_Plot <- function(input) {
   renderPlot({
 
-    Filtered_DDI_Data <- filter(DDI_data, drug1_name == input$Drug_Name | drug1_name == input$Drug_Name)
+    Filtered_DDI_Data <- filter(DDI_data, drug1_name == input$Drug_Name | drug1_name == input$Drug_Names)
     
     ggplot(Filtered_DDI_Data, aes(x = drug1_name, y = drug2_name)) + 
       geom_tile(aes(fill = interaction_type)) + 
@@ -67,11 +75,16 @@ Int_Rev_Plot <- function(input) {
       return(NULL) # Return nothing if input is not valid
     }
     
+    # Check if input$Drug_Name is valid and not empty
+    if (is.null(input$Drug_Namess) || input$Drug_Namess == "") {
+      return(NULL) # Return nothing if input is not valid
+    }
+    
     # Perform the left join operation
     Joined_DDI_Details <- tryCatch({
       left_join(
         filter(DDI_data, drug1_name == input$Drug_Name),
-        filter(reviews_clean, drug == input$Drug_Name),
+        filter(reviews_clean, drug == input$Drug_Namess),
         by = c("drug1_name" = "drug")
       )
     }, error = function(e) {
