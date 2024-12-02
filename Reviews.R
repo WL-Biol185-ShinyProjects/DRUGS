@@ -62,4 +62,3 @@ graph3 <- function(input) {
       ggtitle("Satisfaction of Drugs based on Reviews")
                  })
 }
-
