@@ -1,3 +1,12 @@
+
+tab4 <- tabPanel(
+  "Tab4",
+  tags$h2("Select your medicine"),
+  mainPanel(
+    
+  )
+)
+
 Interactions <- tabPanel(
   "Interactions",
   tags$h2("The drugs that your selected drug interacts with"),
@@ -51,6 +60,7 @@ Filtered_DDI_Data <- filter(DDI_data,
 
 ggplot(Filtered_DDI_Data, 
        aes( x = drug1_name, y = drug2_name)) + geom_tile(aes(fill = interaction_type)) + theme(axis.text.y = element_blank())
+
 
 #UI for Drug Interaction
 
@@ -121,6 +131,10 @@ Int_Rev_Plot <- function(input) {
 
 
 
+# Comparing Drugs to Reviews based off number of interactions
+
+
+
 
 # Comparing Drugs to Reviews based off number of interactions
 
@@ -134,9 +148,18 @@ Int_Rev_Plot <- function(input) {
 #                                by =  c("drug1_name" = "drug"))
 
 
+
+
+#Joined_DDI_Details %>%
+ # select(drug1_name, excellent, average, poor) %>%
+  #pivot_longer( cols = c(excellent, average, poor), names_to = "Rev_Type", values_to = "Rev_Num") %>%
+  #ggplot(aes(x = Rev_Type, y = Rev_Num, fill = drug1_name)) + geom_bar(stat = "summary", position = "dodge")
+
 #Joined_DDI_Details %>%
 #  select(drug1_name, excellent, average, poor) %>%
 # pivot_longer(., cols = c(excellent, average, poor), names_to = "Review_Type", values_to = "Review_Amount") %>%
 #  ggplot(aes(x = Review_Type, y = Review_Amount, fill = drug1_name)) + geom_bar(stat = "summary", position = "dodge")
+
+
 
 
