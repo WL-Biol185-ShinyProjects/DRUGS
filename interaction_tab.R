@@ -137,10 +137,10 @@ Int_Rev_Plot <- function(input) {
 
 
 
-Joined_DDI_Details %>%
-  select(drug1_name, excellent, average, poor) %>%
-  pivot_longer( cols = c(excellent, average, poor), names_to = "Rev_Type", values_to = "Rev_Num") %>%
-  ggplot(aes(x = Rev_Type, y = Rev_Num, fill = drug1_name)) + geom_bar(stat = "summary", position = "dodge")
+#Joined_DDI_Details %>%
+ # select(drug1_name, excellent, average, poor) %>%
+  #pivot_longer( cols = c(excellent, average, poor), names_to = "Rev_Type", values_to = "Rev_Num") %>%
+  #ggplot(aes(x = Rev_Type, y = Rev_Num, fill = drug1_name)) + geom_bar(stat = "summary", position = "dodge")
 
 #Joined_DDI_Details %>%
 #  select(drug1_name, excellent, average, poor) %>%
