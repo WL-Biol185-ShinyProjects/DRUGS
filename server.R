@@ -264,28 +264,26 @@ library(dplyr)
 
 
 #CLINICAL TRAILS
-  
  function(input, output, session) {
     
-    # Observe and filter data based on user inputs
+    # Dynamically populate "Locations"
     observe({
-      # Filter data reactively based on dropdown inputs
-      filterName <- Clinical_Trai1 %>%
-        filter(
-          (is.null(input$Phases) || Phases == input$Phases) &
-            (is.null(input$Locations) || Locations == input$Locations) &
-            (is.null(input$Conditions) || Conditions == input$Conditions)
-        )
-      
-      # Update dropdown choices dynamically based on filtered data
-      updateSelectizeInput(session, "Conditions",
-                           choices = sort(unique(filterName$Conditions)),
+      updateSelectizeInput(session, "Locations", 
+                           choices = sort(unique(Clinical_Trai1$Locations)),
                            server = TRUE)
-      updateSelectizeInput(session, "Locations",
-                           choices = sort(unique(filterName$Locations)),
+    })
+    
+    # Dynamically populate "Conditions"
+    observe({
+      updateSelectizeInput(session, "Conditions", 
+                           choices = sort(unique(Clinical_Trai1$Conditions)),
                            server = TRUE)
-      updateSelectizeInput(session, "Phases",
-                           choices = sort(unique(filterName$Phases)),
+    })
+    
+    # Dynamically populate "StudyStatus" (Phases)
+    observe({
+      updateSelectizeInput(session, "StudyStatus", 
+                           choices = sort(unique(Clinical_Trai1$StudyStatus)),
                            server = TRUE)
     })
     
@@ -293,15 +291,18 @@ library(dplyr)
     filtered_data <- reactive({
       req(input$search)  # Ensure the search button is clicked
       
-      Clinical_Trai1 %>%
+      # Apply the final filtering on the dataset based on user inputs
+      filtered <- Clinical_Trai1 %>%
         filter(
-          grepl(input$location, Locations, ignore.case = TRUE) &
-            grepl(input$condition, Conditions, ignore.case = TRUE) &
-            (is.null(input$status) || Phases == input$status)
+          grepl(input$Locations, Locations, ignore.case = TRUE) &
+            grepl(input$Conditions, Conditions, ignore.case = TRUE) &
+            grepl(input$StudyStatus, StudyStatus, ignore.case = TRUE)
         )
+      
+      return(filtered)
     })
     
-    # Output filtered results as a table
+    # Output the filtered data as a table
     output$results <- renderTable({
       filtered_data()
     })
@@ -370,5 +371,9 @@ function(input, output) {
   })
 }
 }
+
+
+
+
 
 

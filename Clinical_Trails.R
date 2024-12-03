@@ -1,3 +1,4 @@
+
 # Load the dataset
 Clinical_Trai1 <- read.csv("ctg-studies.csv")
 
@@ -16,8 +17,5 @@ Clinical <- tabPanel("Clinical Trial Matching",
                               )
                             )
 )
-
-
-
 
 
