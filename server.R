@@ -264,57 +264,49 @@ library(dplyr)
 
 
 #CLINICAL TRAILS
-function(input, output, session) {
-  # Populate the "Location" dropdown 
-  observe({
-    updateSelectInput(session, "Locations", 
-                      choices = sort(unique(clinical_data$Locations)),
-    server = TRUE)
-  })
   
-  # Populate the "Condition" dropdown 
-  observe({
-    updateSelectInput(session, "Conditions", 
-                      choices = sort(unique(clinical_data$Conditions)),
-    server = TRUE)
-                      
-  })
-  
-  # Populate the "Study Status" dropdown 
-  observe({
-    updateSelectInput(session, "Phases", 
-                      choices = sort(unique(clinical_data$Phase)),
-    server = TRUE)
-  })
-  
-  #Creating filter for drug name for medicalUses.Rn
-  ClinicalNameFiltered <- filterName[1:23409, 2]
-  updateSelectizeInput(session, 
-                       "drugName", 
-                       choices = unique(drugNameFiltered),
-                       server = TRUE
-  )
-
-
-  
+ function(input, output, session) {
+    
+    # Observe and filter data based on user inputs
+    observe({
+      # Filter data reactively based on dropdown inputs
+      filterName <- Clinical_Trai1 %>%
+        filter(
+          (is.null(input$Phases) || Phases == input$Phases) &
+            (is.null(input$Locations) || Locations == input$Locations) &
+            (is.null(input$Conditions) || Conditions == input$Conditions)
+        )
+      
+      # Update dropdown choices dynamically based on filtered data
+      updateSelectizeInput(session, "Conditions",
+                           choices = sort(unique(filterName$Conditions)),
+                           server = TRUE)
+      updateSelectizeInput(session, "Locations",
+                           choices = sort(unique(filterName$Locations)),
+                           server = TRUE)
+      updateSelectizeInput(session, "Phases",
+                           choices = sort(unique(filterName$Phases)),
+                           server = TRUE)
+    })
+    
     # Reactive filtering of the data
     filtered_data <- reactive({
-      req(input$search) # Ensure the search button is clicked
+      req(input$search)  # Ensure the search button is clicked
       
-      clinical_data[
-        grepl(input$location, clinical_data$Location, ignore.case = TRUE) &
-          grepl(input$condition, clinical_data$Condition, ignore.case = TRUE) &
-          clinical_data$Phases == input$status, 
-      ]
+      Clinical_Trai1 %>%
+        filter(
+          grepl(input$location, Locations, ignore.case = TRUE) &
+            grepl(input$condition, Conditions, ignore.case = TRUE) &
+            (is.null(input$status) || Phases == input$status)
+        )
     })
     
     # Output filtered results as a table
     output$results <- renderTable({
       filtered_data()
     })
-}
-}
-
+  }
+  
 
 #Pharmacokinetics_Simulation
 function(input, output) {
@@ -376,6 +368,7 @@ function(input, output) {
   output$half_life_text <- renderText({
     paste("Calculated elimination rate constant based on half-life: ", round(log(2) / input$half_life, 4))
   })
+}
 }
 
 
