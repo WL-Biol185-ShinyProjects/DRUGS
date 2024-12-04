@@ -1,12 +1,3 @@
-
-tab4 <- tabPanel(
-  "Tab4",
-  tags$h2("Select your medicine"),
-  mainPanel(
-    
-  )
-)
-
 Interactions <- tabPanel(
   "Interactions",
   tags$h2("The drugs that your selected drug interacts with"),
