@@ -10,10 +10,16 @@ clinical_trials <- read.csv("ClinicalST.csv")
     sidebarPanel(
       selectizeInput("condition", "Select Condition(s):", 
                      choices = unique(clinical_trials$Conditions), 
+                     options = list(maxOptions = 10),
                      multiple = TRUE),
+      
+      
       selectizeInput("gender", "Select Gender(s):", 
                      choices = unique(clinical_trials$Sex), 
                      multiple = TRUE),
+      
+      
+      
       selectizeInput("phase", "Select Phase(s):", 
                      choices = unique(na.omit(clinical_trials$Phases)), 
                      multiple = TRUE),

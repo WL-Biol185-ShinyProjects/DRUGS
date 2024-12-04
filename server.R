@@ -34,7 +34,9 @@ function(input, output, session) {
   #Filtering for only illness names 
   illnessNameSubset <- unique(symptom_list[1:248000, 50])
 }
+
   # Cost Tab
+function(input, output, session) {
   updateSelectizeInput(session,
                        "Brand_Name",
                        choices = Spread_Prices$Brnd_Name,
@@ -67,6 +69,7 @@ function(input, output, session) {
                        server = TRUE
   )
   
+
   #Creating filter to only select based on drug illness input for medicalUses.R 
   observe ({
     filterName <- filter(symptom_list, 
@@ -84,6 +87,8 @@ function(input, output, session) {
                          server = TRUE
     )
   })
+  
+}
   observe ({
     #Creating filter for drug selected in drugName search bar for medicalUses.R
     nameFilteredForEffect <- filter(symptom_list, name == input$drugName)
@@ -278,19 +283,39 @@ function(input, output, session) {
   }
   
 #Pharmacokinetics_Simulation
-  
   function(input, output, session) {
     
     # Event Reactive to run the simulation when "simulate" button is clicked
     drug_data <- eventReactive(input$simulate, {
-      req(input$age, input$weight, input$dose, input$half_life)
+      req(input$age, input$weight, input$dose, input$half_life)  # Ensure inputs are provided
       
       # Simulate pharmacokinetics
+      simulate_adme <- function(age, weight, gender, health_condition, dose, half_life) {
+        # Example logic for ADME simulation
+        time <- seq(0, 24, by = 0.5)  # Time in hours
+        
+        # Adjust elimination rate based on age
+        # Younger (under 18) and older (over 65) individuals have slower clearance
+        age_factor <- ifelse(age < 18, 0.8, ifelse(age > 65, 0.7, 1)) 
+        
+        elimination_rate <- (log(2) / half_life) * age_factor
+        
+        # Adjust dose based on weight and health condition
+        adjusted_dose <- dose * (weight / 70) * ifelse(health_condition == "Healthy", 1, 0.8)
+        
+        # Simulate drug concentration
+        concentration <- adjusted_dose * exp(-elimination_rate * time)  # Exponential decay formula
+        
+        data.frame(Time = time, Concentration = concentration)
+      }
+      
+      # Call the function to simulate ADME
       simulate_adme(input$age, input$weight, input$gender, input$health_condition, input$dose, input$half_life)
     })
     
     # Plot the drug concentration over time
     output$drug_concentration_plot <- renderPlot({
+      req(drug_data())  # Ensure data is available
       data <- drug_data()
       ggplot(data, aes(x = Time, y = Concentration)) +
         geom_line(color = "blue") +
@@ -300,19 +325,18 @@ function(input, output, session) {
     
     # Display summary of the simulation
     output$drug_summary <- renderPrint({
+      req(drug_data())  # Ensure data is available
       data <- drug_data()
       peak_concentration <- max(data$Concentration)
       peak_time <- data$Time[which.max(data$Concentration)]
-      half_life_calculated <- log(2) / (0.693 / input$half_life)  # Recalculate half-life for the given model
+      half_life_calculated <- input$half_life  # Display user-provided half-life
       
-      cat("Peak Concentration:", peak_concentration, "mg/L\n")
-      cat("Peak Time:", peak_time, "hours\n")
-      cat("Calculated Half-Life:", half_life_calculated, "hours")
+      cat("Peak Concentration:", round(peak_concentration, 2), "mg/L\n")
+      cat("Peak Time:", round(peak_time, 2), "hours\n")
+      cat("Input Half-Life:", round(half_life_calculated, 2), "hours\n")
+      cat("Note: Elimination rate was adjusted based on age (Age Factor:", 
+          ifelse(input$age < 18, 0.8, ifelse(input$age > 65, 0.7, 1)), ").\n")
     })
     
   }
-
-    
-    
-  
   
