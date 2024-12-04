@@ -231,12 +231,12 @@ function(input, output, session) {
   
   
  
-  
+}
 
 
 #CLINICAL TRAILS
   
-  
+clinical_trials <- read.csv("ClinicalST.csv")
   
     # Reactive dataset filtering
     filtered_data <- reactive({
@@ -338,5 +338,5 @@ function(input, output, session) {
           ifelse(input$age < 18, 0.8, ifelse(input$age > 65, 0.7, 1)), ").\n")
     })
     
-  }
+  
   
