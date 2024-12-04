@@ -1,10 +1,9 @@
 library(shiny)
 library(dplyr)
 library(leaflet)
-library(plotly)
 library(ggplot2)
 library(maps)
-
+library(tidyverse)
 
 source("home.R")
 source("medicalUses.R")
@@ -16,7 +15,6 @@ source("Reviews.R")
 
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
 symptom_list <- readRDS("DrugSubandSide.RDS")
-
 function(input, output, session) {
   
   output$graph1 <- graph1(input)
@@ -50,78 +48,115 @@ function(input, output, session) {
                          server = TRUE
     )
   })
-  observe ({
+
     #Creating filter for drug selected in drugName search bar for medicalUses.R
-    nameFilteredForEffect <- filter(symptom_list, name == input$drugName)
-    
-    nameFilteredForEffect[1, 8:49] <- trimws(nameFilteredForEffect[1, 8:49])
-    
-    #Creating tables to select for info needed for medicalUses.R
-    sideEffectForDrugs <- nameFilteredForEffect[1, 8:12]
-    sideEffectForDrugs1 <- nameFilteredForEffect[1, 13:17]
-    checkSideEffect1 <- nameFilteredForEffect[1, 13]
-    sideEffectForDrugs2 <- nameFilteredForEffect[1, 18:22]
-    checkSideEffect2 <- nameFilteredForEffect[1, 18]
-    sideEffectForDrugs3 <- nameFilteredForEffect[1, 23:27]
-    checkSideEffect3 <- nameFilteredForEffect[1, 23]
-    sideEffectForDrugs4 <- nameFilteredForEffect[1, 28:32]
-    checkSideEffect4 <- nameFilteredForEffect[1, 28]
-    sideEffectForDrugs5 <- nameFilteredForEffect[1, 33:37]
-    checkSideEffect5 <- nameFilteredForEffect[1, 33]
-    sideEffectForDrugs6 <- nameFilteredForEffect[1, 38:42]
-    checkSideEffect6 <- nameFilteredForEffect[1, 38]
-    sideEffectForDrugs7 <- nameFilteredForEffect[1, 43:47]
-    checkSideEffect7 <- nameFilteredForEffect[1, 43]
-    sideEffectForDrugs8 <- nameFilteredForEffect[1, 48:49]
-    checkSideEffect8 <- nameFilteredForEffect[1, 48]
-    alternativeDrugs <- nameFilteredForEffect[1, 3:7]
-    therapeuticClass <- nameFilteredForEffect[1, 57]
-    habitForming <- nameFilteredForEffect[1, 56]
-    actionClass <- nameFilteredForEffect[1, 58]
-    chemicalClass <- nameFilteredForEffect[1, 55]
+  
+   nameFilteredForEffect <- reactive ({ filter(symptom_list, name == input$drugName)
+   })
+   nameFilteredForEffectAndSideEffect <- reactive ({ nameFilteredForEffect() %>%
+     select(sideEffect0 : sideEffect41) })
+   nameFilteredForEffectTrimmed <- reactive ({ trimws(nameFilteredForEffectAndSideEffect())})
+   nameFilteredForEffectCheck1 <- reactive ({ nameFilteredForEffect() %>%
+       select(sideEffect5) })
+   nameFilteredForEffectTrimmedCheck1 <- reactive ({ trimws(nameFilteredForEffectCheck1())})
+   nameFilteredForEffectCheck2 <- reactive ({ nameFilteredForEffect() %>%
+       select(sideEffect10) })
+   nameFilteredForEffectTrimmedCheck2 <- reactive ({ trimws(nameFilteredForEffectCheck2())})
+   nameFilteredForEffectCheck3 <- reactive ({ nameFilteredForEffect() %>%
+       select(sideEffect15) })
+   nameFilteredForEffectTrimmedCheck3 <- reactive ({ trimws(nameFilteredForEffectCheck3())})
+   nameFilteredForEffectCheck4 <- reactive ({ nameFilteredForEffect() %>%
+       select(sideEffect20) })
+   nameFilteredForEffectTrimmedCheck4 <- reactive ({ trimws(nameFilteredForEffectCheck4())})
+   nameFilteredForEffectCheck5 <- reactive ({ nameFilteredForEffect() %>%
+       select(sideEffect25) })
+   nameFilteredForEffectTrimmedCheck5 <- reactive ({ trimws(nameFilteredForEffectCheck5())})
+   nameFilteredForEffectCheck6 <- reactive ({ nameFilteredForEffect() %>%
+       select(sideEffect30) })
+   nameFilteredForEffectTrimmedCheck6 <- reactive ({ trimws(nameFilteredForEffectCheck6())})
+   nameFilteredForEffectCheck7 <- reactive ({ nameFilteredForEffect() %>%
+       select(sideEffect35) })
+   nameFilteredForEffectTrimmedCheck7 <- reactive ({ trimws(nameFilteredForEffectCheck7())})
+   nameFilteredForEffectCheck8 <- reactive ({ nameFilteredForEffect() %>%
+       select(sideEffect40) })
+   nameFilteredForEffectTrimmedCheck8 <- reactive ({ trimws(nameFilteredForEffectCheck8())})
+  
+    #Check Side Effect
+    alternativeDrugs <- reactive ({ nameFilteredForEffect() %>%
+        select(substitute0:substitute4)
+      })
+    actionClass <- reactive ({ nameFilteredForEffect() %>%
+        select(Action.Class)
+      }) 
+    chemicalClass <- reactive ({ nameFilteredForEffect() %>%
+        select(Chemical.Class)
+      })
+    therapeuticClass <- reactive ({ nameFilteredForEffect() %>%
+        select(Therapeutic.Class)
+      })
+    habitForming <- reactive ({ nameFilteredForEffect() %>%
+        select(Habit.Forming)
+        })
     
     #Creating output for info tables for medicalUses.R
-    output$sideEffectsTable <- renderTable({sideEffectForDrugs})
+    output$sideEffectsTable <- renderTable({nameFilteredForEffect() %>% 
+        select(sideEffect0:sideEffect4)})
     #Creating conditional outputs for info tables for medicalUses.R
-    output$sideEffectsTable1 <- renderUI({ if(checkSideEffect1 != "") {
-      renderTable(sideEffectForDrugs1)
+    output$sideEffectsTable1 <- renderUI({if(nameFilteredForEffectTrimmedCheck1() != ""
+      ) {
+      renderTable(nameFilteredForEffect() %>% 
+                    select(sideEffect5:sideEffect9))
     }
     })
-    output$sideEffectsTable2 <- renderUI({ if(checkSideEffect2 != "") {
-      renderTable(sideEffectForDrugs2)
+    output$sideEffectsTable2 <- renderUI({ if(nameFilteredForEffectTrimmedCheck2() != ""
+    ) {
+      renderTable(nameFilteredForEffect() %>% 
+                    select(sideEffect10:sideEffect14))
     }
     })
-    output$sideEffectsTable3 <- renderUI({ if(checkSideEffect3 != "") {
-      renderTable(sideEffectForDrugs3)
+    output$sideEffectsTable3 <- renderUI({ if(nameFilteredForEffectTrimmedCheck3() != ""
+    ) {
+      renderTable(nameFilteredForEffect() %>% 
+                    select(sideEffect15:sideEffect19))
     }
     })
-    output$sideEffectsTable4 <- renderUI({ if(checkSideEffect4 != "") {
-      renderTable(sideEffectForDrugs4)
+    output$sideEffectsTable4 <- renderUI({ if(nameFilteredForEffectTrimmedCheck4() != ""
+    ) {
+      renderTable(nameFilteredForEffect() %>% 
+                    select(sideEffect20:sideEffect24))
     }
     })
-    output$sideEffectsTable5 <- renderUI({ if(checkSideEffect5 != "") {
-      renderTable(sideEffectForDrugs5)
+    output$sideEffectsTable5 <- renderUI({ if(nameFilteredForEffectTrimmedCheck5() != ""
+    ) {
+      renderTable(nameFilteredForEffect() %>% 
+                    select(sideEffect25:sideEffect29))
     }
     })
-    output$sideEffectsTable6 <- renderUI({ if(checkSideEffect6 != "") {
-      renderTable(sideEffectForDrugs6)
+    output$sideEffectsTable6 <- renderUI({ if(nameFilteredForEffectTrimmedCheck6() != ""
+    ) {
+      renderTable(nameFilteredForEffect() %>% 
+                    select(sideEffect30:sideEffect34))
     }
     })
-    output$sideEffectsTable7 <- renderUI({ if(checkSideEffect7 != "") {
-      renderTable(sideEffectForDrugs7)
+    output$sideEffectsTable7 <- renderUI({ if(nameFilteredForEffectTrimmedCheck7() != ""
+    ) {
+      renderTable(nameFilteredForEffect() %>% 
+                    select(sideEffect35:sideEffect39))
     }
     })
-    output$sideEffectsTable8 <- renderUI({ if(checkSideEffect8 != "") {
-      renderTable(sideEffectForDrugs8)
+    output$sideEffectsTable8 <- renderUI({ if(nameFilteredForEffectTrimmedCheck8() != ""
+    ) {
+      renderTable(nameFilteredForEffect() %>% 
+                    select(sideEffect40:sideEffect41))
     }
     })
     #Creating table output for medicalUses.R
-    output$alternativeDrugsTable <- renderTable({alternativeDrugs})
-    output$chemicalClassTable <- renderTable({chemicalClass})
-    output$actionClassTable <- renderTable({actionClass})
-    output$therapeuticClassTable <- renderTable({therapeuticClass})
-    output$habitFormingTable <- renderTable({habitForming})
-  })
+    output$alternativeDrugsTable <- renderTable({alternativeDrugs()})
+    output$chemicalClassTable <- renderTable({chemicalClass()})
+    output$actionClassTable <- renderTable({actionClass()})
+    output$therapeuticClassTable <- renderTable({therapeuticClass()})
+    output$habitFormingTable <- renderTable({habitForming()})
+  
   
   #Creating home page button responses for home.R
   observeEvent(input$learnMore, {
@@ -133,7 +168,7 @@ function(input, output, session) {
   
   observeEvent(input$research, {
     showModal(modalDialog(
-      title = "Alternates",
+      title = "Medical Uses",
       "This section is dedicated to cutting-edge research on drug safety and efficacy."
     ))
   })
@@ -144,6 +179,25 @@ function(input, output, session) {
       "Feel free to contact us at info@druginfohub.com."
     ))
   })
+  observeEvent(input$contact_alt, {
+    showModal(modalDialog(
+      title = "Alternates",
+      "This section is dedicated to providing alternatives for your prescription"
+    ))
+  })
+  observeEvent(input$contact_efficacy, {
+    showModal(modalDialog(
+      title = "Efficacy",
+      "This section is dedicated to providing the efficacy of the drug"
+    ))
+  })
+  observeEvent(input$contact_prevalence, {
+    showModal(modalDialog(
+      title = "Prevalence",
+      "This section is dedicated to prevalence"
+    ))
+  })
+  
 
 
 
@@ -229,36 +283,36 @@ drug_usage_data <- data.frame(
 
 #CLINICAL TRAILS
 
-clinical_trials <- data.frame(
-  Trial_ID = 1:5,
-  Disease_Type = c("Cancer", "Diabetes", "Cancer", "Cardiovascular", "Diabetes"),
-  Treatment_Type = c("Chemotherapy", "Insulin", "Immunotherapy", "Statins", "Oral medication"),
-  Location = c("New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ"),
-  stringsAsFactors = FALSE
-)
-
-  
-  observeEvent(input$search, {
-    # Check if condition and treatment are selected
-    if (input$condition == "Select Condition" | input$history == "Select Treatment") {
-      output$results <- renderTable({
-        data.frame(Message = "Please select both a condition and treatment.")
-      })
-      return()  # Stop further processing if inputs are invalid
-    }
-    
-    # Filter trials based on user input
-    filtered_trials <- clinical_trials %>%
-      filter(grepl(input$condition, Disease_Type, ignore.case = TRUE)) %>%
-      filter(grepl(input$history, Treatment_Type, ignore.case = TRUE)) %>%
-      filter(grepl(input$location, Location, ignore.case = TRUE))
-    
-    # Output the filtered trials as a table
-    output$results <- renderTable({
-      if (nrow(filtered_trials) == 0) {
-        return(data.frame(Message = "No matching trials found"))
-      }
-      return(filtered_trials)
-    })
-  })
+# clinical_trials <- data.frame(
+#   Trial_ID = 1:5,
+#   Disease_Type = c("Cancer", "Diabetes", "Cancer", "Cardiovascular", "Diabetes"),
+#   Treatment_Type = c("Chemotherapy", "Insulin", "Immunotherapy", "Statins", "Oral medication"),
+#   Location = c("New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ"),
+#   stringsAsFactors = FALSE
+# )
+# 
+#   
+  # observeEvent(input$search, {
+  #   # Check if condition and treatment are selected
+  #   if (input$condition == "Select Condition" | input$history == "Select Treatment") {
+  #     output$results <- renderTable({
+  #       data.frame(Message = "Please select both a condition and treatment.")
+  #     })
+  #     return()  # Stop further processing if inputs are invalid
+  #   }
+  #   
+  #   # Filter trials based on user input
+  #   filtered_trials <- clinical_trials %>%
+  #     filter(grepl(input$condition, Disease_Type, ignore.case = TRUE)) %>%
+  #     filter(grepl(input$history, Treatment_Type, ignore.case = TRUE)) %>%
+  #     filter(grepl(input$location, Location, ignore.case = TRUE))
+  #   
+  #   # Output the filtered trials as a table
+  #   output$results <- renderTable({
+  #     if (nrow(filtered_trials) == 0) {
+  #       return(data.frame(Message = "No matching trials found"))
+  #     }
+  #     return(filtered_trials)
+  #   })
+  # })
 }
