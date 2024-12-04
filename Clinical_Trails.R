@@ -3,9 +3,9 @@ library(dplyr)
 library(DT)
 
 # Load dataset
-clinical_trials <- read.csv("ClinicalST.csv")
+#clinical_trials <- read.csv("ClinicalST.csv")
 
-  tabPanel("Clinical Trial Matching App")
+Clinical_Trails <-   tabPanel ("Clinical Trial")
   sidebarLayout(
     sidebarPanel(
       selectizeInput("condition", "Select Condition(s):", 

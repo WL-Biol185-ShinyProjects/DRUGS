@@ -1,3 +1,7 @@
+Pharmacokinetics_Simulation1 <- 
+
+
+
 simulate_adme <-
   
   
@@ -23,3 +27,4 @@ sidebarLayout(
 )
 
 )
+
