@@ -12,24 +12,26 @@ home <- tabPanel(
 # Adding image to home
 img(src="drugHomeImage.jpeg", height="100%", width="100%", align = "center"),
 # creating about us text
+  "Name2",
+  tags$h2("Select your medicine"),
+)
   div(class = "content",
       h2("About Us"),
       p("We provide accurate, up-to-date information on a variety of drugs, 
                  their uses, effects, and the latest research."),
-  ),
 # creating info buttons
   div(class = "card",
           h3("Symptoms"),
           p("Explore the various categories of drugs including prescription 
                      medications, over-the-counter drugs, and recreational substances."),
           actionButton("learnMore", "Learn More", class = "btn btn-primary")
-      ),
+  ),
   div(class = "card",
           h3("Medical Uses"),
           p("Stay informed with the latest studies and findings on the safety 
                      and efficacy of different drugs."),
           actionButton("research", "Read More", class = "btn btn-primary")
-      ),
+  ),
       
   div(class = "card",
           h3("Cost"),

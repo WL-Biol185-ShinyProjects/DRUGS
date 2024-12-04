@@ -1,26 +1,39 @@
-Clinical_Trails <-
-  
-  tabPanel("Clinical Trial Matching",
+library(shiny)
+library(dplyr)
+library(DT)
 
+# Load dataset
+<<<<<<< HEAD
+=======
+clinical_trials <- read.csv("ClinicalST.csv")
+>>>>>>> f6e85dbb72df276ef798b0168acc364815e2cbc6
 
+clinical_trials <- read.csv("ClinicalST.csv")
 
-
-
-
-sidebarLayout(
-  sidebarPanel(
-    textInput("name", "Patient Name:", value = ""),
-    selectInput("condition", "Current Health Condition:",
-                choices = c("Select Condition", "Cancer", "Diabetes", "Cardiovascular", "Asthma", "Arthritis")),
-    selectInput("history", "Treatment History:",
-                choices = c("Select Treatment", "Chemotherapy", "Insulin", "Immunotherapy", "Statins", "Oral medication")),
-    textInput("location", "Location (City/State):", value = ""),
-    actionButton("search", "Find Matching Trials")
-  ),
-  
-  mainPanel(
-    tableOutput("results")
+Clinical_Trials <-   tabPanel ("Clinical Trial")
+  sidebarLayout(
+    sidebarPanel(
+      selectizeInput("condition", "Select Condition(s):", 
+                     choices = unique(clinical_trials$Conditions), 
+                     options = list(maxOptions = 10),
+                     multiple = TRUE),
+      
+      
+      selectizeInput("gender", "Select Gender(s):", 
+                     choices = unique(clinical_trials$Sex), 
+                     multiple = TRUE),
+      
+      
+      
+      selectizeInput("phase", "Select Phase(s):", 
+                     choices = unique(na.omit(clinical_trials$Phases)), 
+                     multiple = TRUE),
+      actionButton("search", "Search"),
+      actionButton("reset", "Reset Filters")
+    ),
+    mainPanel(
+      textOutput("summary"),
+      DT::dataTableOutput("results")
+    )
   )
-)
-)
 

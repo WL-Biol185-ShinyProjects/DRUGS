@@ -1,15 +1,15 @@
 library(shiny)
 library(dplyr)
 library(leaflet)
-library(plotly)
-
 source("home.R")
 source("medicalUses.R")
-source("tab3.R")
-source("tab4.R")
+source("Cost_tab.R")
+source("interaction_tab.R")
 source("Clinical_Trails.R")
 source("Maps.R")
 source("Reviews.R")
+source("Pharmacokinetics_Simulation1.R")
+
 
 fluidPage (
   includeCSS("www/homePage.css"),
@@ -19,14 +19,15 @@ fluidPage (
       h1("Welcome to Drug Squad!!!")
   ),
   navbarPage(
-    "Drug Squad",
+    "Home",
     home,
     medicalUses,
-    tab3,
-    tab4,
-    Clinical_Trails,
+    Costs,
+    Interactions,
+    Clinical_Trials,
     Maps,
-    Reviews
+    Reviews,
+    Pharmacokinetics_Simulation1
   )
   
   
