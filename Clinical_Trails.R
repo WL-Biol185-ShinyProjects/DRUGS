@@ -14,19 +14,19 @@ Clinical_Trials <-   tabPanel ("Clinical Trial")
   sidebarLayout(
     sidebarPanel(
       selectizeInput("condition", "Select Condition(s):", 
-                     choices = unique(clinical_trials$Conditions), 
+                     choices = NULL, 
                      options = list(maxOptions = 10),
                      multiple = TRUE),
       
       
       selectizeInput("gender", "Select Gender(s):", 
-                     choices = unique(clinical_trials$Sex), 
+                     choices = NULL, 
                      multiple = TRUE),
       
       
       
       selectizeInput("phase", "Select Phase(s):", 
-                     choices = unique(na.omit(clinical_trials$Phases)), 
+                     choices = NULL, 
                      multiple = TRUE),
       actionButton("search", "Search"),
       actionButton("reset", "Reset Filters")

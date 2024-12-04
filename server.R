@@ -254,6 +254,7 @@ function(input, output, session) {
     map_data <- states_map %>%
       left_join(filtered_data(), by = "region")
     
+<<<<<<< HEAD
     # Plot the map using ggplot2
     ggplot(data = map_data, aes(x = long, y = lat, group = group, fill = !!sym(input$metric))) +
       geom_polygon(color = "white") +
@@ -276,6 +277,102 @@ function(input, output, session) {
         Median = median(.data[[input$metric]], na.rm = TRUE)
       )
   })
+=======
+    # Filtered data based on user input
+    filtered_data <- reactive({
+      drugs_data %>%
+        filter(Year == input$year) %>%
+        mutate(region = tolower(State))
+    })
+    
+    # Render the static map
+    output$mapPlot <- renderPlot({
+      # Merge state map data with filtered dataset
+      map_data <- states_map %>%
+        left_join(filtered_data(), by = "region")
+      
+      # Plot the map using ggplot2
+      ggplot(data = map_data, aes(x = long, y = lat, group = group, fill = !!sym(input$metric))) +
+        geom_polygon(color = "white") +
+        scale_fill_viridis_c(option = "D") +
+        labs(
+          title = paste("Drug Use Metric:", input$metric, "| Year:", input$year),
+          fill = input$metric
+        ) +
+        theme_void() +
+        theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
+    })
+    
+    # Render the summary table
+    output$summaryTable <- renderTable({
+      filtered_data() %>%
+        summarise(
+          Metric = input$metric,
+          Total = sum(.data[[input$metric]], na.rm = TRUE),
+          Mean = mean(.data[[input$metric]], na.rm = TRUE),
+          Median = median(.data[[input$metric]], na.rm = TRUE)
+        )
+    })
+  
+  
+ 
+
+
+
+#CLINICAL TRAILS
+  
+clinical_trials <- read.csv("ClinicalST.csv")
+  
+    # Reactive dataset filtering
+    filtered_data <- reactive({
+      clinical_trials %>%
+        filter(
+          if (!is.null(input$Conditions) && length(input$Conditions) > 0) 
+            Conditions %in% input$Conditions else TRUE,
+          if (!is.null(input$Sex) && length(input$Sex) > 0) 
+            Sex %in% input$Sex else TRUE,
+          if (!is.null(input$Phases) && length(input$Phases) > 0) 
+            grepl(paste(input$Phases, collapse = "|"), Phases, ignore.case = TRUE) else TRUE
+        )
+    })
+    
+    # Summary text
+    output$summary <- renderText({
+      data <- filtered_data()
+      if (nrow(data) == 0) {
+        return("No matching trials found.")
+      }
+      paste("Found", nrow(data), "matching trials based on your filters.")
+    })
+    
+    # Render results table
+    output$results <- DT::renderDataTable({
+      data <- filtered_data()
+      if (nrow(data) == 0) {
+        return(data.frame(Message = "No matching trials found."))
+      }
+      data %>%
+        select(Locations, Brief.Summary) %>%
+        rename(
+          Location = Locations,
+          "Brief Summary" = Brief.Summary
+        )
+    }, options = list(pageLength = 5, autoWidth = TRUE))
+    
+    # Reset filters
+    observeEvent(input$reset, {
+<<<<<<< HEAD
+      updateSelectizeInput(session, "condition", selected = clinical_trials$Conditions, server = TRUE)
+      # updateSelectizeInput(session, "gender", selected = NULL, server = TRUE)
+      # updateSelectizeInput(session, "phase", selected = NULL, server = TRUE)
+=======
+      updateSelectizeInput(session, "Conditions", selected = NULL)
+      updateSelectizeInput(session, "Sex", selected = NULL)
+      updateSelectizeInput(session, "Phases", selected = NULL)
+>>>>>>> 9ccaea29ba05481bddd090d96e3a589697cfdc00
+    })
+
+>>>>>>> 40b72aa3337b63b2b2557e91122a01f0daedd0eb
   
   
   
@@ -357,6 +454,7 @@ function(input, output, session) {
       data.frame(Time = time, Concentration = concentration)
     }
     
+<<<<<<< HEAD
     # Call the function to simulate ADME
     simulate_adme(input$age, input$weight, input$gender, input$health_condition, input$dose, input$half_life)
   })
@@ -387,3 +485,7 @@ function(input, output, session) {
   })
   
 }
+=======
+}
+  
+>>>>>>> 40b72aa3337b63b2b2557e91122a01f0daedd0eb
