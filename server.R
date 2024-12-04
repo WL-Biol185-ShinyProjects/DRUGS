@@ -242,12 +242,12 @@ function(input, output, session) {
     filtered_data <- reactive({
       clinical_trials %>%
         filter(
-          if (!is.null(input$Condition) && length(input$Condition) > 0) 
-            Conditions %in% input$condition else TRUE,
-          if (!is.null(input$gender) && length(input$gender) > 0) 
-            Sex %in% input$gender else TRUE,
-          if (!is.null(input$phase) && length(input$phase) > 0) 
-            grepl(paste(input$phase, collapse = "|"), Phases, ignore.case = TRUE) else TRUE
+          if (!is.null(input$Conditions) && length(input$Conditions) > 0) 
+            Conditions %in% input$Conditions else TRUE,
+          if (!is.null(input$Sex) && length(input$Sex) > 0) 
+            Sex %in% input$Sex else TRUE,
+          if (!is.null(input$Phases) && length(input$Phases) > 0) 
+            grepl(paste(input$Phases, collapse = "|"), Phases, ignore.case = TRUE) else TRUE
         )
     })
     
@@ -276,9 +276,9 @@ function(input, output, session) {
     
     # Reset filters
     observeEvent(input$reset, {
-      updateSelectizeInput(session, "condition", selected = NULL)
-      updateSelectizeInput(session, "gender", selected = NULL)
-      updateSelectizeInput(session, "phase", selected = NULL)
+      updateSelectizeInput(session, "Conditions", selected = NULL)
+      updateSelectizeInput(session, "Sex", selected = NULL)
+      updateSelectizeInput(session, "Phases", selected = NULL)
     })
   
   
