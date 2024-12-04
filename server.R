@@ -236,7 +236,7 @@ function(input, output, session) {
 
 #CLINICAL TRAILS
   
-  
+clinical_trials <- read.csv("ClinicalST.csv")
   
     # Reactive dataset filtering
     filtered_data <- reactive({
