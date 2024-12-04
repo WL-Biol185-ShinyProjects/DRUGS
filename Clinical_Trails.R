@@ -1,21 +1,28 @@
+library(shiny)
+library(dplyr)
+library(DT)
 
-# Load the dataset
-Clinical_Trai1 <- read.csv("ctg-studies.csv")
+# Load dataset
+clinical_trials <- read.csv("ClinicalST.csv")
 
-
-
-Clinical <- tabPanel("Clinical Trial Matching",
-                            sidebarLayout(
-                              sidebarPanel(
-                                selectizeInput("Locations", "Select Location:", choices = NULL),
-                                selectizeInput("Conditions", "Select Condition:", choices = NULL),
-                                selectizeInput("StudyStatus", "Select Phase:", choices = NULL),
-                                actionButton("search", "Search")
-                              ),
-                              mainPanel(
-                                tableOutput("results")
-                              )
-                            )
-)
-
+  tabPanel("Clinical Trial Matching App")
+  sidebarLayout(
+    sidebarPanel(
+      selectizeInput("condition", "Select Condition(s):", 
+                     choices = unique(clinical_trials$Conditions), 
+                     multiple = TRUE),
+      selectizeInput("gender", "Select Gender(s):", 
+                     choices = unique(clinical_trials$Sex), 
+                     multiple = TRUE),
+      selectizeInput("phase", "Select Phase(s):", 
+                     choices = unique(na.omit(clinical_trials$Phases)), 
+                     multiple = TRUE),
+      actionButton("search", "Search"),
+      actionButton("reset", "Reset Filters")
+    ),
+    mainPanel(
+      textOutput("summary"),
+      DT::dataTableOutput("results")
+    )
+  )
 
