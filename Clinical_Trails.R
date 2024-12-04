@@ -3,10 +3,9 @@ library(dplyr)
 library(DT)
 
 # Load dataset
-<<<<<<< HEAD
-=======
+
 clinical_trials <- read.csv("ClinicalST.csv")
->>>>>>> f6e85dbb72df276ef798b0168acc364815e2cbc6
+
 
 clinical_trials <- read.csv("ClinicalST.csv")
 
