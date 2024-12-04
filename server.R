@@ -88,7 +88,7 @@ function(input, output, session) {
     )
   })
   
-}
+
   observe ({
     #Creating filter for drug selected in drugName search bar for medicalUses.R
     nameFilteredForEffect <- filter(symptom_list, name == input$drugName)
@@ -231,7 +231,7 @@ function(input, output, session) {
   }
   
  
-  
+}
 
 
 #CLINICAL TRAILS
