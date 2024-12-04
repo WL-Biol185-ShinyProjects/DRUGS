@@ -54,7 +54,7 @@ Avg_Spend_Plot <- ggplot(Cost_Filtered_Drug,
 Avg_Spend_Plot <- function(input) {
   renderPlot({
 
-    filter(Spread_Prices, Brnd_Name == input$Brnd_Name ) %>%
+    filter(Spread_Prices, Brnd_Name == input$Brand_Name ) %>%
       ggplot( aes(x = year, y = Avg_Spnd_Per_Clm)) + geom_line(stat = "identity") 
 
    # filter(Spread_Prices, Brnd_Name %in% input$Brand_Name ) %>%
@@ -67,7 +67,7 @@ Avg_Spend_Plot <- function(input) {
 Tot_DrugSpend_Plot <- function(input) {
   renderPlot({
 
-    filter(Spread_Prices, Brnd_Name == input$Brnd_Name) %>%
+    filter(Spread_Prices, Brnd_Name == input$Brand_Name) %>%
 
    # filter(Spread_Prices, Brnd_Name %in% input$Brand_Name) %>%
 
@@ -87,7 +87,7 @@ Tot_Spend_Plot <- function(input) {
 
 Tot_DrugClaims_Plot <- function(input) {
   renderPlot({
-    filter(Spread_Prices, Brnd_Name == input$Brnd_Name) %>%
+    filter(Spread_Prices, Brnd_Name == input$Brand_Name) %>%
 
 #Tot_DrugClaims_Plot <- function(input) {
  # renderPlot({
