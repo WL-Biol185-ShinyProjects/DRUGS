@@ -24,7 +24,7 @@ fluidPage (
     medicalUses,
     Costs,
     Interactions,
-    Clinical_Trails,
+    Clinical_Trials,
     Maps,
     Reviews,
     Pharmacokinetics_Simulation1
