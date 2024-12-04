@@ -13,10 +13,10 @@ states_map <- map_data("state")
 
 # UI: Define the user interface
 Maps <- 
-  tabPanel(" Drug Use in the USA")
+  tabPanel(" Drug Use in the USA",
   
   sidebarLayout(
-    sidebarPanel(
+    #sidebarPanel(
       selectInput(
         inputId = "metric",
         label = "Select Metric:",

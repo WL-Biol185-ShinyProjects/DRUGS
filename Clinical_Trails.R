@@ -7,10 +7,12 @@ library(DT)
 clinical_trials <- read.csv("ClinicalST.csv")
 
 
+
 clinical_trials <- read.csv("ClinicalST.csv")
 
-Clinical_Trials <-   tabPanel ("Clinical Trial")
-  sidebarLayout(
+
+Clinical_Trials <-   tabPanel ("Clinical Trial",
+  #sidebarLayout(
     sidebarPanel(
       selectizeInput("condition", "Select Condition(s):", 
                      choices = NULL, 
@@ -30,9 +32,11 @@ Clinical_Trials <-   tabPanel ("Clinical Trial")
       actionButton("search", "Search"),
       actionButton("reset", "Reset Filters")
     ),
+    
     mainPanel(
       textOutput("summary"),
       DT::dataTableOutput("results")
     )
-  )
+)
+  #)
 
