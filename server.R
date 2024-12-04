@@ -33,10 +33,10 @@ function(input, output, session) {
   
   #Filtering for only illness names 
   illnessNameSubset <- unique(symptom_list[1:248000, 50])
-}
+
 
   # Cost Tab
-function(input, output, session) {
+
   updateSelectizeInput(session,
                        "Brand_Name",
                        choices = Spread_Prices$Brnd_Name,
@@ -88,7 +88,7 @@ function(input, output, session) {
     )
   })
   
-}
+
   observe ({
     #Creating filter for drug selected in drugName search bar for medicalUses.R
     nameFilteredForEffect <- filter(symptom_list, name == input$drugName)
@@ -191,7 +191,7 @@ function(input, output, session) {
 
 
 #HEATMAP
-  function(input, output, session) {
+  
     
     # Filtered data based on user input
     filtered_data <- reactive({
@@ -228,7 +228,7 @@ function(input, output, session) {
           Median = median(.data[[input$metric]], na.rm = TRUE)
         )
     })
-  }
+  
   
  
   
@@ -237,12 +237,12 @@ function(input, output, session) {
 #CLINICAL TRAILS
   
   
-  function(input, output, session) {
+  
     # Reactive dataset filtering
     filtered_data <- reactive({
       clinical_trials %>%
         filter(
-          if (!is.null(input$condition) && length(input$condition) > 0) 
+          if (!is.null(input$Condition) && length(input$Condition) > 0) 
             Conditions %in% input$condition else TRUE,
           if (!is.null(input$gender) && length(input$gender) > 0) 
             Sex %in% input$gender else TRUE,
@@ -280,10 +280,10 @@ function(input, output, session) {
       updateSelectizeInput(session, "gender", selected = NULL)
       updateSelectizeInput(session, "phase", selected = NULL)
     })
-  }
+  
   
 #Pharmacokinetics_Simulation
-  function(input, output, session) {
+
     
     # Event Reactive to run the simulation when "simulate" button is clicked
     drug_data <- eventReactive(input$simulate, {
