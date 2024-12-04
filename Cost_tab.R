@@ -44,25 +44,9 @@ Avg_Spend_Plot <- ggplot(Cost_Filtered_Drug,
                          aes(x = year, y = Avg_Spnd_Per_Clm)) + geom_line(stat = "identity") 
 
 
-Cost_tab <- tabPanel(
+
   
   
-  
-  #Server Info for Searching Drug
-  
-  function(input, output, session) { 
-    Brand_Name_Subset <- unique(Cost_Data_filtered(1))
-    
-    observe({
-      updateSelectizeInput(session,
-                           "Brand_Name",
-                           choices = Brand_Name_Subset, ) } )
-    
-    observe ({
-      filterName <- filter(Cost_Data_filtered, 
-                           Brnd_Name == input$Brand_Name ) } )
-  }
-)
 
 
 #UI info for Searching Drug
@@ -70,11 +54,11 @@ Cost_tab <- tabPanel(
 Avg_Spend_Plot <- function(input) {
   renderPlot({
 
-    filter(Spread_Prices, Brnd_Name == Input$Brnd_Name ) %>%
+    filter(Spread_Prices, Brnd_Name == input$Brnd_Name ) %>%
       ggplot( aes(x = year, y = Avg_Spnd_Per_Clm)) + geom_line(stat = "identity") 
 
-    filter(Spread_Prices, Brnd_Name %in% input$Brand_Name ) %>%
-      ggplot( aes(x = year, y = Avg_Spnd_Per_Clm )) + geom_line(stat = "identity") 
+   # filter(Spread_Prices, Brnd_Name %in% input$Brand_Name ) %>%
+     # ggplot( aes(x = year, y = Avg_Spnd_Per_Clm )) + geom_line(stat = "identity") 
 
   }
   )
@@ -83,9 +67,9 @@ Avg_Spend_Plot <- function(input) {
 Tot_DrugSpend_Plot <- function(input) {
   renderPlot({
 
-    filter(Spread_Prices, Brnd_Name == Input$Brnd_Name) %>%
+    filter(Spread_Prices, Brnd_Name == input$Brnd_Name) %>%
 
-    filter(Spread_Prices, Brnd_Name %in% input$Brand_Name) %>%
+   # filter(Spread_Prices, Brnd_Name %in% input$Brand_Name) %>%
 
       ggplot( aes(x = year, y = Tot_Spndng)) + geom_line(stat = "identity")
   }
@@ -105,16 +89,16 @@ Tot_DrugClaims_Plot <- function(input) {
   renderPlot({
     filter(Spread_Prices, Brnd_Name == input$Brnd_Name) %>%
 
-Tot_DrugClaims_Plot <- function(input) {
-  renderPlot({
-    filter(Spread_Prices, Brnd_Name %in% input$Brand_Name) %>%
+#Tot_DrugClaims_Plot <- function(input) {
+ # renderPlot({
+   # filter(Spread_Prices, Brnd_Name %in% input$Brand_Name) %>%
 
       ggplot(aes(x = year, y = Tot_Clms)) + geom_line(stat = "Identity")
   }
   )
 }
-  }
-)}
+  
+
 # Comparing Total Spending over time Per Drug
 
 ggplot(Cost_Filtered_Drug, 
