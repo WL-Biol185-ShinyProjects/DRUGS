@@ -254,7 +254,7 @@ function(input, output, session) {
     map_data <- states_map %>%
       left_join(filtered_data(), by = "region")
     
-<<<<<<< HEAD
+
     # Plot the map using ggplot2
     ggplot(data = map_data, aes(x = long, y = lat, group = group, fill = !!sym(input$metric))) +
       geom_polygon(color = "white") +
@@ -277,7 +277,7 @@ function(input, output, session) {
         Median = median(.data[[input$metric]], na.rm = TRUE)
       )
   })
-=======
+
     # Filtered data based on user input
     filtered_data <- reactive({
       drugs_data %>%
@@ -361,18 +361,18 @@ clinical_trials <- read.csv("ClinicalST.csv")
     
     # Reset filters
     observeEvent(input$reset, {
-<<<<<<< HEAD
+
       updateSelectizeInput(session, "condition", selected = clinical_trials$Conditions, server = TRUE)
       # updateSelectizeInput(session, "gender", selected = NULL, server = TRUE)
       # updateSelectizeInput(session, "phase", selected = NULL, server = TRUE)
-=======
+
       updateSelectizeInput(session, "Conditions", selected = NULL)
       updateSelectizeInput(session, "Sex", selected = NULL)
       updateSelectizeInput(session, "Phases", selected = NULL)
->>>>>>> 9ccaea29ba05481bddd090d96e3a589697cfdc00
+
     })
 
->>>>>>> 40b72aa3337b63b2b2557e91122a01f0daedd0eb
+
   
   
   
@@ -454,7 +454,7 @@ clinical_trials <- read.csv("ClinicalST.csv")
       data.frame(Time = time, Concentration = concentration)
     }
     
-<<<<<<< HEAD
+
     # Call the function to simulate ADME
     simulate_adme(input$age, input$weight, input$gender, input$health_condition, input$dose, input$half_life)
   })
@@ -485,7 +485,7 @@ clinical_trials <- read.csv("ClinicalST.csv")
   })
   
 }
-=======
-}
+
+
   
->>>>>>> 40b72aa3337b63b2b2557e91122a01f0daedd0eb
+
