@@ -338,5 +338,5 @@ clinical_trials <- read.csv("ClinicalST.csv")
           ifelse(input$age < 18, 0.8, ifelse(input$age > 65, 0.7, 1)), ").\n")
     })
     
-  }
+  
   

@@ -3,7 +3,7 @@ library(dplyr)
 library(DT)
 
 # Load dataset
-#clinical_trials <- read.csv("ClinicalST.csv")
+clinical_trials <- read.csv("ClinicalST.csv")
 
 Clinical_Trails <-   tabPanel ("Clinical Trial")
   sidebarLayout(
