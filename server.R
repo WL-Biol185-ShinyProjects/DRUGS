@@ -231,7 +231,7 @@ function(input, output, session) {
   
   
  
-}
+
 
 
 #CLINICAL TRAILS
@@ -276,11 +276,17 @@ clinical_trials <- read.csv("ClinicalST.csv")
     
     # Reset filters
     observeEvent(input$reset, {
+<<<<<<< HEAD
+      updateSelectizeInput(session, "condition", selected = clinical_trials$Conditions, server = TRUE)
+      # updateSelectizeInput(session, "gender", selected = NULL, server = TRUE)
+      # updateSelectizeInput(session, "phase", selected = NULL, server = TRUE)
+=======
       updateSelectizeInput(session, "Conditions", selected = NULL)
       updateSelectizeInput(session, "Sex", selected = NULL)
       updateSelectizeInput(session, "Phases", selected = NULL)
+>>>>>>> 9ccaea29ba05481bddd090d96e3a589697cfdc00
     })
-  
+
   
 #Pharmacokinetics_Simulation
 
@@ -338,5 +344,5 @@ clinical_trials <- read.csv("ClinicalST.csv")
           ifelse(input$age < 18, 0.8, ifelse(input$age > 65, 0.7, 1)), ").\n")
     })
     
-  
+}
   
