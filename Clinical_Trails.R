@@ -4,11 +4,6 @@ library(DT)
 
 # Load dataset
 
-clinical_trials <- read.csv("ClinicalST.csv")
-
-
-
-clinical_trials <- read.csv("ClinicalST.csv")
 
 
 Clinical_Trials <-   tabPanel ("Clinical Trial",
@@ -16,7 +11,6 @@ Clinical_Trials <-   tabPanel ("Clinical Trial",
     sidebarPanel(
       selectizeInput("condition", "Select Condition(s):", 
                      choices = NULL, 
-                     options = list(maxOptions = 10),
                      multiple = TRUE),
       
       
