@@ -55,11 +55,6 @@ function(input, output, session) {
                        choices = DDI_data$drug1_name,
                        server = TRUE
   )
-  updateSelectizeInput(session,
-                       "Drug_Namess",
-                       choices = reviews_clean$drug,
-                       server = TRUE
-  )
   
   
   
