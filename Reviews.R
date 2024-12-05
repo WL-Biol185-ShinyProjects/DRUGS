@@ -31,6 +31,7 @@ graph1 <- function(input) {
                      (Drug)
                      )
                    )+
+      xlab("Effectiveness")+
       ylab("Reviews")+
       ggtitle("Effectiveness of Drugs based on Reviews")
   })
