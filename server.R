@@ -313,81 +313,20 @@ function(input, output, session) {
           Median = median(.data[[input$metric]], na.rm = TRUE)
         )
     })
-  
-  
- 
 
-
-
-#CLINICAL TRAILS
-  
-clinical_trials <- read.csv("ClinicalST.csv")
-  
-    # Reactive dataset filtering
-    filtered_data <- reactive({
-      clinical_trials %>%
-        filter(
-          if (!is.null(input$Conditions) && length(input$Conditions) > 0) 
-            Conditions %in% input$Conditions else TRUE,
-          if (!is.null(input$Sex) && length(input$Sex) > 0) 
-            Sex %in% input$Sex else TRUE,
-          if (!is.null(input$Phases) && length(input$Phases) > 0) 
-            grepl(paste(input$Phases, collapse = "|"), Phases, ignore.case = TRUE) else TRUE
-        )
-    })
-    
-    # Summary text
-    output$summary <- renderText({
-      data <- filtered_data()
-      if (nrow(data) == 0) {
-        return("No matching trials found.")
-      }
-      paste("Found", nrow(data), "matching trials based on your filters.")
-    })
-    
-    # Render results table
-    output$results <- DT::renderDataTable({
-      data <- filtered_data()
-      if (nrow(data) == 0) {
-        return(data.frame(Message = "No matching trials found."))
-      }
-      data %>%
-        select(Locations, Brief.Summary) %>%
-        rename(
-          Location = Locations,
-          "Brief Summary" = Brief.Summary
-        )
-    }, options = list(pageLength = 5, autoWidth = TRUE))
-    
-    # Reset filters
-    observeEvent(input$reset, {
-
-      updateSelectizeInput(session, "condition", selected = clinical_trials$Conditions, server = TRUE)
-      # updateSelectizeInput(session, "gender", selected = NULL, server = TRUE)
-      # updateSelectizeInput(session, "phase", selected = NULL, server = TRUE)
-
-      updateSelectizeInput(session, "Conditions", selected = NULL)
-      updateSelectizeInput(session, "Sex", selected = NULL)
-      updateSelectizeInput(session, "Phases", selected = NULL)
-
-    })
-
-
-  
-  
-  
-  
-  
-  
   #CLINICAL TRAILS
-  
   clinical_trials <- read.csv("ClinicalST.csv")
+  
+  #Server side selectize input
+  updateSelectizeInput(session, "condition", choices = clinical_trials$Conditions, server = TRUE)
+  updateSelectizeInput(session, "gender", choices = clinical_trials$Sex, server = TRUE)
+  updateSelectizeInput(session, "phase", choices = clinical_trials$Phases, server = TRUE)
   
   # Reactive dataset filtering
   filtered_data <- reactive({
     clinical_trials %>%
       filter(
-        if (!is.null(input$Condition) && length(input$Condition) > 0) 
+        if (!is.null(input$condition) && length(input$Condition) > 0) 
           Conditions %in% input$condition else TRUE,
         if (!is.null(input$gender) && length(input$gender) > 0) 
           Sex %in% input$gender else TRUE,
@@ -421,9 +360,9 @@ clinical_trials <- read.csv("ClinicalST.csv")
   
   # Reset filters
   observeEvent(input$reset, {
-    updateSelectizeInput(session, "condition", selected = clinical_trials$Conditions, server = TRUE)
-    # updateSelectizeInput(session, "gender", selected = NULL, server = TRUE)
-    # updateSelectizeInput(session, "phase", selected = NULL, server = TRUE)
+    updateSelectizeInput(session, "condition", choices = clinical_trials$Conditions, server = TRUE)
+    updateSelectizeInput(session, "gender", choices = clinical_trials$Sex, server = TRUE)
+    updateSelectizeInput(session, "phase", choices = clinical_trials$Phases, server = TRUE)
   })
   
   
