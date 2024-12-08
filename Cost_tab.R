@@ -37,41 +37,22 @@ library(ggplot2)
 
 Spread_Prices <- read.csv("Spread_Prices.csv")
 
-# Comparing average spending per drug over time
-Cost_Filtered_Drug <- filter(Spread_Prices, Brnd_Name == "Heather")
-
-Avg_Spend_Plot <- ggplot(Cost_Filtered_Drug, 
-                         aes(x = year, y = Avg_Spnd_Per_Clm)) + geom_line(stat = "identity") 
-
-
-
-  
-  
-
-
-#UI info for Searching Drug
+# Graphs for cost tab UI
 
 Avg_Spend_Plot <- function(input) {
   renderPlot({
-
     filter(Spread_Prices, Brnd_Name == input$Brand_Name ) %>%
-      ggplot( aes(x = year, y = Avg_Spnd_Per_Clm)) + geom_line(stat = "identity") 
-
-   # filter(Spread_Prices, Brnd_Name %in% input$Brand_Name ) %>%
-     # ggplot( aes(x = year, y = Avg_Spnd_Per_Clm )) + geom_line(stat = "identity") 
-
+      ggplot( aes(x = year, y = Avg_Spnd_Per_Clm)) + geom_line(stat = "identity") +
+      labs(x = "Year", y = "Average Drug Cost per Claim")
   }
   )
 }
 
 Tot_DrugSpend_Plot <- function(input) {
   renderPlot({
-
     filter(Spread_Prices, Brnd_Name == input$Brand_Name) %>%
-
-   # filter(Spread_Prices, Brnd_Name %in% input$Brand_Name) %>%
-
-      ggplot( aes(x = year, y = Tot_Spndng)) + geom_line(stat = "identity")
+      ggplot( aes(x = year, y = Tot_Spndng)) + geom_line(stat = "identity") + 
+      labs(x = "Year", y = "Total Spending of Selected Drug")
   }
   )
 }
@@ -79,7 +60,8 @@ Tot_DrugSpend_Plot <- function(input) {
 Tot_Spend_Plot <- function(input) {
   renderPlot({
     ggplot(Spread_Prices,
-           aes(x = year, y = Tot_Spndng)) + geom_bar(stat = "identity")
+           aes(x = year, y = Tot_Spndng)) + geom_bar(stat = "identity") +
+      labs(x = "Year", y = "Total Spending of All Drugs")
   }
   )
 }
@@ -88,30 +70,14 @@ Tot_Spend_Plot <- function(input) {
 Tot_DrugClaims_Plot <- function(input) {
   renderPlot({
     filter(Spread_Prices, Brnd_Name == input$Brand_Name) %>%
-
-#Tot_DrugClaims_Plot <- function(input) {
- # renderPlot({
-   # filter(Spread_Prices, Brnd_Name %in% input$Brand_Name) %>%
-
-      ggplot(aes(x = year, y = Tot_Clms)) + geom_line(stat = "Identity")
+      ggplot(aes(x = year, y = Tot_Clms)) + geom_line(stat = "Identity") +
+      labs(x = "Year", y = "Total Drug Claims")
   }
   )
 }
   
 
-# Comparing Total Spending over time Per Drug
 
-ggplot(Cost_Filtered_Drug, 
-       aes(x = year, y = Tot_Spndng)) + geom_line(stat = "identity")
-
-# Comparing Total Spending over time of All Drugs
-ggplot(Spread_Prices, 
-       aes(x = year, y = Tot_Spndng)) + geom_bar(stat = "identity")
-
-# Comparing total claims over time per drug 
-
-ggplot(Cost_Filtered_Drug,
-       aes(x = year, y = Tot_Clms)) + geom_line(stat = "identity")
 
 
 
