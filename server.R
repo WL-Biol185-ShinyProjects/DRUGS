@@ -240,6 +240,8 @@ function(input, output, session) {
   
   #HEATMAP
   
+  drugs_data <- read.csv("drugs.csv")
+  states_map <- map_data("state")
   
   # Filtered data based on user input
   filtered_data <- reactive({
@@ -278,41 +280,7 @@ function(input, output, session) {
       )
   })
 
-    # Filtered data based on user input
-    filtered_data <- reactive({
-      drugs_data %>%
-        filter(Year == input$year) %>%
-        mutate(region = tolower(State))
-    })
     
-    # Render the static map
-    output$mapPlot <- renderPlot({
-      # Merge state map data with filtered dataset
-      map_data <- states_map %>%
-        left_join(filtered_data(), by = "region")
-      
-      # Plot the map using ggplot2
-      ggplot(data = map_data, aes(x = long, y = lat, group = group, fill = !!sym(input$metric))) +
-        geom_polygon(color = "white") +
-        scale_fill_viridis_c(option = "D") +
-        labs(
-          title = paste("Drug Use Metric:", input$metric, "| Year:", input$year),
-          fill = input$metric
-        ) +
-        theme_void() +
-        theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
-    })
-    
-    # Render the summary table
-    output$summaryTable <- renderTable({
-      filtered_data() %>%
-        summarise(
-          Metric = input$metric,
-          Total = sum(.data[[input$metric]], na.rm = TRUE),
-          Mean = mean(.data[[input$metric]], na.rm = TRUE),
-          Median = median(.data[[input$metric]], na.rm = TRUE)
-        )
-    })
 
   #CLINICAL TRAILS
   clinical_trials <- read.csv("ClinicalST.csv")
@@ -323,7 +291,7 @@ function(input, output, session) {
   updateSelectizeInput(session, "phase", choices = clinical_trials$Phases, server = TRUE)
   
   # Reactive dataset filtering
-  filtered_data <- reactive({
+  filtered_data1 <- reactive({
     clinical_trials %>%
       filter(
         if (!is.null(input$condition) && length(input$Condition) > 0) 
@@ -337,7 +305,7 @@ function(input, output, session) {
   
   # Summary text
   output$summary <- renderText({
-    data <- filtered_data()
+    data <- filtered_data1()
     if (nrow(data) == 0) {
       return("No matching trials found.")
     }
@@ -346,7 +314,7 @@ function(input, output, session) {
   
   # Render results table
   output$results <- DT::renderDataTable({
-    data <- filtered_data()
+    data <- filtered_data1()
     if (nrow(data) == 0) {
       return(data.frame(Message = "No matching trials found."))
     }
