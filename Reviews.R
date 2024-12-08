@@ -3,6 +3,7 @@ UnduplicatedDrug2 <- read.csv("UnduplicatedDrug2.csv")
 Reviews <- tabPanel(
   "Reviews",
   tags$h2("Reviews categorized by Effectiveness, Ease of Use, and Satisfaction of Drugs"),
+  tags$p("In the Reviews tab, you can figure out which drug is liked the most based on effectiveness, ease of use, and satisfaction ratings. First, select which condition/illness you would like to learn more about. Then three graphs will come up, with all the drugs for a certain condition plotted. The farther to the right the drug is on the x-axis and the higher the drug is on the y-axis, the more effectiveness/ease of use/satisfaction ratings a drug has gotten and the more reviews it has, making the predictions a more reliable source."),
   
   sidebarPanel(
     selectizeInput(
