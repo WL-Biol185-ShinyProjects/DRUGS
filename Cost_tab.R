@@ -10,6 +10,7 @@ Spread_Prices <- read.csv("Spread_Prices.csv")
 Costs <- tabPanel(
   "Costs",
   tags$h2("Costs of drugs covered by Medicaid"),
+  tags$p("Do you have questions about how the cost of a drug has changed over the years? Here, you can search for the drug you would like to know about, and gain information about the average spending per drug claim (figure 1), total spending per selected drug (figure 2), total spending on all drugs (figure 3), and total claims of your selected drug (figure 4) from 2018-2022."),
   
   sidebarPanel(
     selectizeInput(
