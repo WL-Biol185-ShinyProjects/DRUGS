@@ -235,13 +235,13 @@ function(input, output, session) {
   
   
   #HEATMAP
-<<<<<<< HEAD
+
   drugs_data <- read.csv("drugs.csv")  
-=======
+
   
   drugs_data <- read.csv("drugs.csv")
   states_map <- map_data("state")
->>>>>>> 7353256999056a6e2f09e33198bd91cdd281b451
+
   
   # Filtered data based on user input
   filtered_data <- reactive({
