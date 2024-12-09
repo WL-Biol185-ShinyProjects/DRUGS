@@ -7,8 +7,6 @@ medicalUses <- tabPanel(
 sidebarLayout(
 #Creating search bar for illness
    sidebarPanel(
-   h1("Drug Search Tool"),
-   p("Enter or select the illness that your drug treats and then enter or select your drug to find what side effects your drug has, what drugs can be used as alternatives to your drug, its chemical class, action class, therapuatic class and if it has the potential to be habit forming."),
     selectizeInput(
       "drugIllness",
       "What illness does your drug treat?",

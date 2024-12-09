@@ -3,6 +3,7 @@ library(shiny)
 library(dplyr)
 library(leaflet)
 library(ggplot2)
+library(jsonlite)
 library(maps)
 source("home.R")
 source("medicalUses.R")
@@ -234,9 +235,13 @@ function(input, output, session) {
   
   
   #HEATMAP
+
+  drugs_data <- read.csv("drugs.csv")  
+
   
   drugs_data <- read.csv("drugs.csv")
   states_map <- map_data("state")
+
   
   # Filtered data based on user input
   filtered_data <- reactive({
@@ -277,6 +282,12 @@ function(input, output, session) {
 
     
 
+    
+    
+    
+    
+    
+    
   #CLINICAL TRAILS
   clinical_trials <- read.csv("ClinicalST.csv")
   

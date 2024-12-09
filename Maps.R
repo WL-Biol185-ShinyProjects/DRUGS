@@ -13,9 +13,12 @@ states_map <- map_data("state")
 
 # UI: Define the user interface
 Maps <- 
-  tabPanel(" Drug Use in the USA",
+  tabPanel(" Substance Use in the USA",
+           tags$h2("The Frequency of Substance Use in the USA"),
+           tags$p("Explore the patterns of alcohol, marijuana, illicit drugs, and tobacco usage across the United States with our interactive heat map spanning from 2002 to 2018. This visualization highlights the frequency of each substance within different states and regions, allowing you to easily identify trends, hotspots, and regional variations over time. Whether you're analyzing public health data, researching societal behaviors, or seeking insights for policy development, this heat map provides a clear and comprehensive view of substance use dynamics across the nation."),
   
   sidebarLayout(
+
     #sidebarPanel(
       selectInput(
         inputId = "metric",

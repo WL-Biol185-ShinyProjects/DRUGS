@@ -6,9 +6,12 @@ simulate_adme <-
   
   
   tabPanel("Pharmacokinetics Simulation (ADME)",
+           tags$h2("Pharmacokinetics Simulation"),
+           tags$p("Explore our cutting-edge pharmacokinetics simulation tool that models how drugs are absorbed, distributed, metabolized, and excreted in the body. Ideal for researchers, students, and healthcare professionals, this interactive platform allows you to visualize drug concentration over time, optimize dosing strategies, and predict potential interactions. Enhance your understanding of drug behavior and improve therapeutic outcomes with our comprehensive simulation experience."),
 
 sidebarLayout(
   sidebarPanel(
+   
     numericInput("age", "Age (years):", value = 30, min = 18, max = 100),
     numericInput("weight", "Weight (kg):", value = 70, min = 30, max = 200),
     selectInput("gender", "Gender:", choices = c("Male", "Female")),
