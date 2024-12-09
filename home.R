@@ -14,7 +14,7 @@ img(src="drugHomeImage.jpeg", height="100%", width="100%", align = "center"),
 # creating about us text
   "Name2",
   tags$h2("Select your medicine"),
-)
+
   div(class = "content",
       h2("About Us"),
       p("We provide accurate, up-to-date information on a variety of drugs, 
@@ -55,3 +55,4 @@ img(src="drugHomeImage.jpeg", height="100%", width="100%", align = "center"),
           actionButton("contact_prevalence", "Get in Touch", class = "btn btn-primary")
       )
   )
+)

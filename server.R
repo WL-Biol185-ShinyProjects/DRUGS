@@ -323,8 +323,11 @@ function(input, output, session) {
   
   # Reset filters
   observeEvent(input$reset, {
+    updateSelectizeInput(session, "condition", choices = NULL, server = TRUE)
     updateSelectizeInput(session, "condition", choices = clinical_trials$Conditions, server = TRUE)
+    updateSelectizeInput(session, "gender", choices = NULL, server = TRUE)
     updateSelectizeInput(session, "gender", choices = clinical_trials$Sex, server = TRUE)
+    updateSelectizeInput(session, "phase", choices = NULL, server = TRUE)
     updateSelectizeInput(session, "phase", choices = clinical_trials$Phases, server = TRUE)
   })
   
