@@ -1,8 +1,10 @@
 Interactions <- tabPanel(
   "Interactions",
   tags$h2("The drugs that your selected drug interacts with"),
-  
+  tags$p("	Are you interested in how many drugs your selected drug interacts with and what type of interactions these can be? You can select two drugs and compare their amount of drug interactions and see what type of interactions they cause in Figure 1. You can then select a particular drug and look at reviews from patients on that drug in Figure 2 and see how reviews and number of drug interactions correlate with one another."),
+  tags$h3("Select or search two different drugs to see if they interact with each other"),
   sidebarPanel(
+    tags$h3("Drug Choice One"),
     selectizeInput(
       "Drug_Name",
       "What is the name of the drug you are inquiring about?",
@@ -11,6 +13,7 @@ Interactions <- tabPanel(
   ),
   
   sidebarPanel(
+    tags$h3("Drug Choice Two"),
     selectizeInput(
       "Drug_Names",
       "What is the name of the drug you are inquiring about?",
