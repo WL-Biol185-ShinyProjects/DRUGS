@@ -7,14 +7,16 @@ home <- tabPanel(
   p(
     "This application offers an interactive platform to explore comprehensive information about pharmaceutical drugs. This app is for the normal everyday patients just like you!! Our interface is very user-friendly, so do not be afraid to head to the app tabs! If you want basic information on symptoms and side effects, we got it! If you want to compare the cost of two drugs, compare the reviews from multiple drugs that treat the same condition, or even compare how two drugs would interact with each other, we’ve got that too!! This app holds many advanced search functionalities in order for you to be able to get the information you need. Our data comes from very reliable sources, including the government database and DrugBank."),
   p(
-    "While Drug Squad provides comprehensive and reliable drug information, it is important to remember that this app is designed for informational purposes only. Always consult your doctor or healthcare provider before making any decisions about your medications or treatment. Your doctor knows your medical history best and can provide personalized advice tailored to your needs."
-  ),
-# Adding image to home
+    "While Drug Squad provides comprehensive and reliable drug information, it is important to remember that this app is designed for informational purposes only. Always consult your doctor or healthcare provider before making any decisions about your medications or treatment. Your doctor knows your medical history best and can provide personalized advice tailored to your needs."),
+
+  # Adding image to home
 img(src="drugHomeImage.jpeg", height="100%", width="100%", align = "center"),
+
 # creating about us text
+
   tags$h2("Information about what services this website offers"),
   p("Click on the section that you are interested in learning to get information on what the tab will do."),
-
+  
 # creating info buttons
   div(class = "card",
           h3("Drug Information Tab"),
