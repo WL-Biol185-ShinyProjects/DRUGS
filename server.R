@@ -42,20 +42,6 @@ function(input, output, session) {
                        server = TRUE
   )
   
-  #Interaction Tab
-  updateSelectizeInput(session,
-                       "Drug_Name",
-                       choices = DDI_data$drug1_name,
-                       server = TRUE
-  )
-  updateSelectizeInput(session,
-                       "Drug_Names",
-                       choices = DDI_data$drug1_name,
-                       server = TRUE
-  )
-  
-  
-  
   #Server side Selectization for drug illness for medicalUses.R    
   updateSelectizeInput(session,
                        "drugIllness",

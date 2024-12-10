@@ -1,3 +1,12 @@
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+
+DDI_data <- read.csv("DDI_data.csv")
+reviews_clean <- read.csv("reviews_clean.csv")
+
+
 Interactions <- tabPanel(
   "Interactions",
   tags$h2("The drugs that your selected drug interacts with"),
@@ -8,7 +17,7 @@ Interactions <- tabPanel(
     selectizeInput(
       "Drug_Name",
       "What is the name of the drug you are inquiring about?",
-      choices = NULL
+      choices = unique(DDI_data$drug1_name)
     )
   ),
   
@@ -17,7 +26,7 @@ Interactions <- tabPanel(
     selectizeInput(
       "Drug_Names",
       "What is the name of the drug you are inquiring about?",
-      choices = NULL
+      choices = unique(DDI_data$drug1_name)
     )
   ),
   
@@ -29,14 +38,6 @@ Interactions <- tabPanel(
     
   )
 )
-
-library(tidyverse)
-library(dplyr)
-library(ggplot2)
-
-
-DDI_data <- read.csv("DDI_data.csv")
-reviews_clean <- read.csv("reviews_clean.csv")
 
 
 #UI for Drug Interaction
