@@ -3,10 +3,14 @@ library(dplyr)
 #Creating Tab Panel Name and Text
 medicalUses <- tabPanel(
   "Drug Information",
-  tags$h1("What medical uses your medicine has"), 
+  tags$h2("Medical Properties of Your Selected Drug"),
+  p("Here, you can find lots of information about different drugs. First, enter the condition that the wanted drug treats. Second, you can select which drug you would like information on, whether it's a drug you are taking now or a drug you would like to learn more about. The information includes side effects, alternative drugs for the selected illness, chemical class, action class, therapeutic class, and potential for habit-forming. This knowledge can help you see which drug is right for you!"),
+  p("A drug's chemical class is information about its chemical structure, action class is information about the mechanism that it works through, therapeutic class is information about what its intended effect is and potential for habit forming is if it has a risk for addiction"),
 sidebarLayout(
 #Creating search bar for illness
    sidebarPanel(
+     tags$h2("Drug Search"),
+     p("Select or search for the illness that the drug treats and then for the drug you are interested in"),
     selectizeInput(
       "drugIllness",
       "What illness does your drug treat?",
