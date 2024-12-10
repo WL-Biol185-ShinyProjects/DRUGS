@@ -11,6 +11,8 @@ simulate_adme <-
 
 sidebarLayout(
   sidebarPanel(
+    tags$h3("Pharmacokinetics Stimulator"),
+    p("Enter your information to stimulate how drug concentrations will change in your body over time"),
    
     numericInput("age", "Age (years):", value = 30, min = 18, max = 100),
     numericInput("weight", "Weight (kg):", value = 70, min = 30, max = 200),
