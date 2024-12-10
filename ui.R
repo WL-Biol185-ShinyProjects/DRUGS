@@ -3,12 +3,12 @@ library(dplyr)
 library(leaflet)
 source("home.R")
 source("medicalUses.R")
-source("Cost_tab.R")
+source("cost_tab.R")
 source("interaction_tab.R")
-source("Clinical_Trails.R")
-source("Maps.R")
-source("Reviews.R")
-source("Pharmacokinetics_Simulation1.R")
+source("clinical_Trials.R")
+source("maps.R")
+source("reviews.R")
+source("pharmacokinetics_Simulation1.R")
 
 
 fluidPage (
