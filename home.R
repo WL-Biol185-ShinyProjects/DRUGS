@@ -12,47 +12,46 @@ home <- tabPanel(
 # Adding image to home
 img(src="drugHomeImage.jpeg", height="100%", width="100%", align = "center"),
 # creating about us text
-  "Name2",
-  tags$h2("Select your medicine"),
+  tags$h2("Information about what services this website offers"),
+  p("Click on the section that you are interested in learning to get information on what the tab will do."),
 
-  div(class = "content",
-      h2("About Us"),
-      p("We provide accurate, up-to-date information on a variety of drugs, 
-                 their uses, effects, and the latest research."),
 # creating info buttons
   div(class = "card",
-          h3("Symptoms"),
-          p("Explore the various categories of drugs including prescription 
-                     medications, over-the-counter drugs, and recreational substances."),
-          actionButton("learnMore", "Learn More", class = "btn btn-primary")
+          h3("Drug Information Tab"),
+          p("The drug information tab allows you to select a drug and learn more about it"),
+          actionButton("drugInfoButton", "Learn More", class = "btn btn-primary")
   ),
   div(class = "card",
-          h3("Medical Uses"),
-          p("Stay informed with the latest studies and findings on the safety 
-                     and efficacy of different drugs."),
-          actionButton("research", "Read More", class = "btn btn-primary")
+          h3("Costs Tab"),
+          p("The costs tab allows you to select drugs and see how costs have changed over time"),
+          actionButton("cost", "Learn More", class = "btn btn-primary")
   ),
       
   div(class = "card",
-          h3("Cost"),
-          p("Have questions? Feel free to reach out to us for more information."),
-          actionButton("contact", "Get in Touch", class = "btn btn-primary")
+          h3("Interactions Tab"),
+          p("The interactions tab allows you to select multiple drugs and see if there are interactions between them"),
+          actionButton("interactions", "Learn More", class = "btn btn-primary")
       ),
   div(class = "card",
-          h3("Alternatives"),
-          p("Have questions? Feel free to reach out to us for more information."),
-          actionButton("contact_alt", "Get in Touch", class = "btn btn-primary")
+          h3("Clinical Trials Tab"),
+          p("The clinical trials tab allows you to select a condition and see what clinical trials are being performed for it"),
+          actionButton("clinicalTrial", "Learn More", class = "btn btn-primary")
       ),
   div(class = "card",
-          h3("Reviews"),
-          p("Have questions? Feel free to reach out to us for more information."),
-          actionButton("contact_efficacy", "Get in Touch", class = "btn btn-primary")
+          h3("Substance Use in the USA Tab"),
+          p("The substance use in the USA tab allows you to select a year and substance and see how much it was used in the USA"),
+          actionButton("substanceUse", "Learn More", class = "btn btn-primary")
       ),
       
   div(class = "card",
-          h3("Prevalence"),
-          p("Have questions? Feel free to reach out to us for more information."),
-          actionButton("contact_prevalence", "Get in Touch", class = "btn btn-primary")
-      )
+          h3("Reviews Tab"),
+          p("The reviews tab allows you to select a drug and see how well reviewed the drug is"),
+          actionButton("review", "Learn More", class = "btn btn-primary")
+      ),
+
+  div(class = "card",
+    h3("Pharmacokinetics Simulation (ADME) Tab"),
+    p("The pharmacokinetics simulation (ADME) tab allows you to select different factors about yourself and stimulate how long a drug will stay in your body"),
+    actionButton("pharmacoKinetics", "Learn More", class = "btn btn-primary")
   )
-)
+  )
