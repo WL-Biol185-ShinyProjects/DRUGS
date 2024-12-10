@@ -14,7 +14,6 @@ source("Maps.R")
 source("Reviews.R")
 source("Pharmacokinetics_Simulation1.R")
 
-
 #Loading in info from DrugSubandSide.RDS for medicalUses.R
 symptom_list <- readRDS("DrugSubandSide.RDS")
 
@@ -29,15 +28,14 @@ function(input, output, session) {
   output$Tot_Spend_Plot <- Tot_Spend_Plot(input)
   output$Tot_DrugClaims_Plot <- Tot_DrugClaims_Plot(input)
   
+  #Output costs tab graphs
   output$Int_Plot <- Int_Plot(input)
   output$Int_Rev_Plot <- Int_Rev_Plot(input)
   
   #Filtering for only illness names 
   illnessNameSubset <- unique(symptom_list[1:248000, 50])
   
-  
   # Cost Tab
-  
   updateSelectizeInput(session,
                        "Brand_Name",
                        choices = Spread_Prices$Brnd_Name,
@@ -65,17 +63,17 @@ function(input, output, session) {
                        server = TRUE
   )
   
-  
   #Creating filter to only select based on drug illness input for medicalUses.R 
   observe ({
     filterName <- filter(symptom_list, 
-                         use0 == input$drugIllness | 
+                           use0 == input$drugIllness | 
                            use1 == input$drugIllness |
                            use2 == input$drugIllness |
                            use3 == input$drugIllness |
                            use4 == input$drugIllness
     )
-    #Creating filter for drug name for medicalUses.Rn
+    
+  #Creating filter for drug name for medicalUses.R
     drugNameFiltered <- filterName[1:248000, 2]
     updateSelectizeInput(session, 
                          "drugName", 
@@ -85,104 +83,133 @@ function(input, output, session) {
   })
   
   #Creating filter for drug selected in drugName search bar for medicalUses.R
-  
-  nameFilteredForEffect <- reactive ({ filter(symptom_list, name == input$drugName)
+  nameFilteredForEffect <- reactive ({ filter(
+                                       symptom_list, 
+                                       name == input$drugName
+                                       )
   })
-  nameFilteredForEffectAndSideEffect <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect0 : sideEffect41) })
+  nameFilteredForEffectAndSideEffect <- reactive ({ 
+                                        nameFilteredForEffect() %>%
+                                        select(sideEffect0 : sideEffect41) 
+    })
   nameFilteredForEffectTrimmed <- reactive ({ trimws(nameFilteredForEffectAndSideEffect())})
   nameFilteredForEffectCheck1 <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect5) })
+                                             select(sideEffect5) 
+                                          })
   nameFilteredForEffectTrimmedCheck1 <- reactive ({ trimws(nameFilteredForEffectCheck1())})
   nameFilteredForEffectCheck2 <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect10) })
+                                             select(sideEffect10) 
+                                          })
   nameFilteredForEffectTrimmedCheck2 <- reactive ({ trimws(nameFilteredForEffectCheck2())})
   nameFilteredForEffectCheck3 <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect15) })
+                                             select(sideEffect15) 
+                                          })
   nameFilteredForEffectTrimmedCheck3 <- reactive ({ trimws(nameFilteredForEffectCheck3())})
   nameFilteredForEffectCheck4 <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect20) })
+                                             select(sideEffect20) 
+                                          })
   nameFilteredForEffectTrimmedCheck4 <- reactive ({ trimws(nameFilteredForEffectCheck4())})
   nameFilteredForEffectCheck5 <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect25) })
+                                             select(sideEffect25) 
+                                          })
   nameFilteredForEffectTrimmedCheck5 <- reactive ({ trimws(nameFilteredForEffectCheck5())})
   nameFilteredForEffectCheck6 <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect30) })
+                                             select(sideEffect30) 
+                                          })
   nameFilteredForEffectTrimmedCheck6 <- reactive ({ trimws(nameFilteredForEffectCheck6())})
   nameFilteredForEffectCheck7 <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect35) })
+                                             select(sideEffect35) 
+                                          })
   nameFilteredForEffectTrimmedCheck7 <- reactive ({ trimws(nameFilteredForEffectCheck7())})
   nameFilteredForEffectCheck8 <- reactive ({ nameFilteredForEffect() %>%
-      select(sideEffect40) })
+                                             select(sideEffect40) 
+                                          })
   nameFilteredForEffectTrimmedCheck8 <- reactive ({ trimws(nameFilteredForEffectCheck8())})
   
-  #Check Side Effect
+  #Creating outputs for drug classes
   alternativeDrugs <- reactive ({ nameFilteredForEffect() %>%
-      select(substitute0:substitute4)
-  })
+                                  select(substitute0:substitute4)
+                               })
   actionClass <- reactive ({ nameFilteredForEffect() %>%
-      select(Action.Class)
-  }) 
+                             select(Action.Class)
+                          }) 
   chemicalClass <- reactive ({ nameFilteredForEffect() %>%
-      select(Chemical.Class)
-  })
+                               select(Chemical.Class)
+                            })
   therapeuticClass <- reactive ({ nameFilteredForEffect() %>%
-      select(Therapeutic.Class)
-  })
+                                  select(Therapeutic.Class)
+                               })
   habitForming <- reactive ({ nameFilteredForEffect() %>%
-      select(Habit.Forming)
-  })
+                              select(Habit.Forming)
+                           })
   
   #Creating output for info tables for medicalUses.R
   output$sideEffectsTable <- renderTable({nameFilteredForEffect() %>% 
-      select(sideEffect0:sideEffect4)})
+                                          select(sideEffect0:sideEffect4)
+                                        })
   #Creating conditional outputs for info tables for medicalUses.R
-  output$sideEffectsTable1 <- renderUI({if(nameFilteredForEffectTrimmedCheck1() != ""
-  ) {
+  output$sideEffectsTable1 <- renderUI({if(
+    nameFilteredForEffectTrimmedCheck1() != ""
+  ) 
+    {
     renderTable(nameFilteredForEffect() %>% 
-                  select(sideEffect5:sideEffect9))
+      select(sideEffect5:sideEffect9))
   }
   })
-  output$sideEffectsTable2 <- renderUI({ if(nameFilteredForEffectTrimmedCheck2() != ""
-  ) {
+  output$sideEffectsTable2 <- renderUI({ if(
+    nameFilteredForEffectTrimmedCheck2() != ""
+  ) 
+    {
     renderTable(nameFilteredForEffect() %>% 
-                  select(sideEffect10:sideEffect14))
+      select(sideEffect10:sideEffect14))
   }
   })
-  output$sideEffectsTable3 <- renderUI({ if(nameFilteredForEffectTrimmedCheck3() != ""
-  ) {
+  output$sideEffectsTable3 <- renderUI({ if(
+    nameFilteredForEffectTrimmedCheck3() != ""
+  ) 
+    {
     renderTable(nameFilteredForEffect() %>% 
-                  select(sideEffect15:sideEffect19))
+      select(sideEffect15:sideEffect19))
   }
   })
-  output$sideEffectsTable4 <- renderUI({ if(nameFilteredForEffectTrimmedCheck4() != ""
-  ) {
+  output$sideEffectsTable4 <- renderUI({ if(
+    nameFilteredForEffectTrimmedCheck4() != ""
+  )
+    {
     renderTable(nameFilteredForEffect() %>% 
-                  select(sideEffect20:sideEffect24))
+      select(sideEffect20:sideEffect24))
   }
   })
-  output$sideEffectsTable5 <- renderUI({ if(nameFilteredForEffectTrimmedCheck5() != ""
-  ) {
+  output$sideEffectsTable5 <- renderUI({ if(
+    nameFilteredForEffectTrimmedCheck5() != ""
+  ) 
+    {
     renderTable(nameFilteredForEffect() %>% 
-                  select(sideEffect25:sideEffect29))
+      select(sideEffect25:sideEffect29))
   }
   })
-  output$sideEffectsTable6 <- renderUI({ if(nameFilteredForEffectTrimmedCheck6() != ""
-  ) {
+  output$sideEffectsTable6 <- renderUI({ if(
+    nameFilteredForEffectTrimmedCheck6() != ""
+  ) 
+    {
     renderTable(nameFilteredForEffect() %>% 
-                  select(sideEffect30:sideEffect34))
+      select(sideEffect30:sideEffect34))
   }
   })
-  output$sideEffectsTable7 <- renderUI({ if(nameFilteredForEffectTrimmedCheck7() != ""
-  ) {
+  output$sideEffectsTable7 <- renderUI({ if(
+    nameFilteredForEffectTrimmedCheck7() != ""
+  )
+    {
     renderTable(nameFilteredForEffect() %>% 
-                  select(sideEffect35:sideEffect39))
+     select(sideEffect35:sideEffect39))
   }
   })
-  output$sideEffectsTable8 <- renderUI({ if(nameFilteredForEffectTrimmedCheck8() != ""
-  ) {
+  output$sideEffectsTable8 <- renderUI({ if(
+    nameFilteredForEffectTrimmedCheck8() != ""
+  ) 
+    {
     renderTable(nameFilteredForEffect() %>% 
-                  select(sideEffect40:sideEffect41))
+     select(sideEffect40:sideEffect41))
   }
   })
   #Creating table output for medicalUses.R
@@ -192,60 +219,59 @@ function(input, output, session) {
   output$therapeuticClassTable <- renderTable({therapeuticClass()})
   output$habitFormingTable <- renderTable({habitForming()})
   
-  
   #Creating home page button responses for home.R
-  observeEvent(input$learnMore, {
+  observeEvent(input$drugInfoButton, {
     showModal(modalDialog(
-      title = "Symptoms",
-      "Here you'll find detailed information on various types of drugs."
+      title = "Drug Information",
+      "The drug information tab includes information about the side effects, alternatives, chemical class, action class, therapeutic class and potential for habit forming."
     ))
   })
   
-  observeEvent(input$research, {
+  observeEvent(input$cost, {
     showModal(modalDialog(
-      title = "Medical Uses",
-      "This section is dedicated to cutting-edge research on drug safety and efficacy."
+      title = "Costs",
+      "The costs tab includes information of a drug's average spending per drug claim, total spending per selected drug, total spending on all drugs, and total claims of your selected drug from 2018-2022"
     ))
   })
   
-  observeEvent(input$contact, {
+  observeEvent(input$interactions, {
     showModal(modalDialog(
-      title = "Contact Us",
-      "Feel free to contact us at info@druginfohub.com."
+      title = "Interactions",
+      "The interaction tab allows you to select two drugs and see if there are any interactions between them and see how well reviewed a drug is"
     ))
   })
-  observeEvent(input$contact_alt, {
+  observeEvent(input$clinicalTrial, {
     showModal(modalDialog(
-      title = "Alternates",
-      "This section is dedicated to providing alternatives for your prescription"
+      title = "Clinical Trial",
+      "The clinical trial tab allows you to select a condition, clinical trial phase, targeted sex and see what clinical trials are currently being performed based on your criteria"
     ))
   })
-  observeEvent(input$contact_efficacy, {
+  observeEvent(input$substanceUse, {
     showModal(modalDialog(
-      title = "Efficacy",
-      "This section is dedicated to providing the efficacy of the drug"
+      title = "Substance Use in the USA",
+      "The substance use in the USA tab allows you to select a substance and year to generate a heat map of the USA showing how much of the substance was used in each state and a summary table with total, mean and median use of the substance"
     ))
   })
-  observeEvent(input$contact_prevalence, {
+  observeEvent(input$review, {
     showModal(modalDialog(
-      title = "Prevalence",
-      "This section is dedicated to prevalence"
+      title = "Reviews",
+      "The reviews tab allows you to select a drug and see reviews on effectiveness, ease of use, and satisfaction ratings"
     ))
   })
-  
+  observeEvent(input$pharmacoKinetics, {
+    showModal(modalDialog(
+      title = "Pharmacokinetics Simulation (ADME)",
+      "The pharmacokinetics simulation tab allows you to enter your information and a simulation will stimulate how long the drug will stay in your body at what concentration, gaining insight into what concentration of a drug you should take"
+    ))
+  })
   
   #HEATMAP
-
-  drugs_data <- read.csv("drugs.csv")  
-
-  
   drugs_data <- read.csv("drugs.csv")
   states_map <- map_data("state")
 
-  
   # Filtered data based on user input
   filtered_data <- reactive({
-    drugs_data %>%
+      drugs_data %>%
       filter(Year == input$year) %>%
       mutate(region = tolower(State))
   })
@@ -256,7 +282,6 @@ function(input, output, session) {
     map_data <- states_map %>%
       left_join(filtered_data(), by = "region")
     
-
     # Plot the map using ggplot2
     ggplot(data = map_data, aes(x = long, y = lat, group = group, fill = !!sym(input$metric))) +
       geom_polygon(color = "white") +
@@ -280,27 +305,30 @@ function(input, output, session) {
       )
   })
 
-    
-
-    
-    
-    
-    
-    
-    
   #CLINICAL TRAILS
   clinical_trials <- read.csv("ClinicalST.csv")
   
   #Server side selectize input
-  updateSelectizeInput(session, "condition", choices = clinical_trials$Conditions, server = TRUE)
-  updateSelectizeInput(session, "gender", choices = clinical_trials$Sex, server = TRUE)
-  updateSelectizeInput(session, "phase", choices = clinical_trials$Phases, server = TRUE)
+  updateSelectizeInput(session, 
+                       "condition", 
+                       choices = clinical_trials$Conditions, 
+                       server = TRUE
+                       )
+  updateSelectizeInput(session, "gender", 
+                       choices = clinical_trials$Sex, 
+                       server = TRUE
+                       )
+  updateSelectizeInput(session, 
+                       "phase", 
+                       choices = clinical_trials$Phases, 
+                       server = TRUE
+                       )
   
   # Reactive dataset filtering
   filtered_data1 <- reactive({
     clinical_trials %>%
       filter(
-        if (!is.null(input$condition) && length(input$Condition) > 0) 
+        if (!is.null(input$condition) && length(input$condition) > 0) 
           Conditions %in% input$condition else TRUE,
         if (!is.null(input$gender) && length(input$gender) > 0) 
           Sex %in% input$gender else TRUE,
@@ -334,18 +362,38 @@ function(input, output, session) {
   
   # Reset filters
   observeEvent(input$reset, {
-    updateSelectizeInput(session, "condition", choices = NULL, server = TRUE)
-    updateSelectizeInput(session, "condition", choices = clinical_trials$Conditions, server = TRUE)
-    updateSelectizeInput(session, "gender", choices = NULL, server = TRUE)
-    updateSelectizeInput(session, "gender", choices = clinical_trials$Sex, server = TRUE)
-    updateSelectizeInput(session, "phase", choices = NULL, server = TRUE)
-    updateSelectizeInput(session, "phase", choices = clinical_trials$Phases, server = TRUE)
+    updateSelectizeInput(session, 
+                         "condition", 
+                         choices = NULL, 
+                         server = TRUE)
+    updateSelectizeInput(session, 
+                         "condition", 
+                         choices = clinical_trials$Conditions, 
+                         server = TRUE
+                         )
+    updateSelectizeInput(session, 
+                         "gender", 
+                         choices = NULL, 
+                         server = TRUE
+                         )
+    updateSelectizeInput(session, 
+                         "gender",
+                         choices = clinical_trials$Sex,
+                         server = TRUE
+                         )
+    updateSelectizeInput(session, 
+                         "phase", 
+                         choices = NULL, 
+                         server = TRUE
+                         )
+    updateSelectizeInput(session, 
+                         "phase", 
+                         choices = clinical_trials$Phases, 
+                         server = TRUE
+                         )
   })
   
-  
   #Pharmacokinetics_Simulation
-  
-  
   # Event Reactive to run the simulation when "simulate" button is clicked
   drug_data <- eventReactive(input$simulate, {
     req(input$age, input$weight, input$dose, input$half_life)  # Ensure inputs are provided
@@ -401,7 +449,3 @@ function(input, output, session) {
   })
   
 }
-
-
-  
-

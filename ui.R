@@ -19,7 +19,7 @@ fluidPage (
       h1("Welcome to Drug Squad!!!")
   ),
   navbarPage(
-    "Home",
+    "Tab Selection",
     home,
     medicalUses,
     Costs,
