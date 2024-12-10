@@ -1,5 +1,6 @@
 library(shiny)
 library(dplyr)
+symptom_list <- readRDS("DrugSubandSide.RDS")
 #Creating Tab Panel Name and Text
 medicalUses <- tabPanel(
   "Drug Information",
@@ -14,7 +15,7 @@ sidebarLayout(
     selectizeInput(
       "drugIllness",
       "What illness does your drug treat?",
-      choices = NULL, 
+      choices = unique(symptom_list$use0), 
     ),
 #Creating search bar for drug name
     selectizeInput(

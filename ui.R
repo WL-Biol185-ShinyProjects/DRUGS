@@ -18,6 +18,7 @@ fluidPage (
   div(class = "header",
       h1("Welcome to Drug Squad!!!")
   ),
+  
   navbarPage(
     "Tab Selection",
     home,
@@ -29,11 +30,4 @@ fluidPage (
     Reviews,
     Pharmacokinetics_Simulation1
   )
-  
-  
-  
-  
-  
 )
-
-

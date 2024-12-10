@@ -42,13 +42,6 @@ function(input, output, session) {
                        server = TRUE
   )
   
-  #Server side Selectization for drug illness for medicalUses.R    
-  updateSelectizeInput(session,
-                       "drugIllness",
-                       choices = illnessNameSubset,
-                       server = TRUE
-  )
-  
   #Creating filter to only select based on drug illness input for medicalUses.R 
   observe ({
     filterName <- filter(symptom_list, 
